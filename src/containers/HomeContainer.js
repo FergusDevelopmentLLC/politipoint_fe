@@ -12,7 +12,7 @@ class HomeContainer extends Component {
 
     return (
     <Fragment>
-    <HeaderLogo />
+    <HeaderLogo version={ this.props.version } />
     <Button />
     <Blurb headerText={ 'The Test' } htmlContent={
       `<p>

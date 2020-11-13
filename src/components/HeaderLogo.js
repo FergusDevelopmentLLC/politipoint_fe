@@ -12,7 +12,7 @@ class HeaderLogo extends Component {
 }
 
 HeaderLogo.defaultProps = {
-  version: 2
+  version: 1
 }
 
 export default HeaderLogo
