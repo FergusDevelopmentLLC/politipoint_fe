@@ -5,11 +5,10 @@ import Blurb from "../components/Blurb"
 import Continuum from '../components/Continuum'
 
 class HomeContainer extends Component {
-
+  
+  // {/* TODO: how to handle ideologies link? */}
   render() {
-
-    {/* TODO: how to handle ideologies link? */}
-
+    
     return (
     <Fragment>
     <HeaderLogo version={ this.props.version } />
@@ -75,10 +74,9 @@ class HomeContainer extends Component {
         </p>`
     } />
 
-    <Button />
+    <Button onGotoQuiz={ this.props.onGotoQuiz } />
     </Fragment>
     )
   }
 }
-
 export default HomeContainer

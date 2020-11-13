@@ -7,30 +7,29 @@ class App extends Component {
     super()
     
     this.state = {
-      HomeContainerVisible: true,
-      QuizContainerVisible: false
+      homeContainerVisible: true,
+      quizContainerVisible: false,
+      version: 2,
+      urlPrefix: 'http://127.0.0.1:3000',
+
     }
   }
 
   onGotoQuiz = () => {
     this.setState(() => {
       return {
-        HomeContainerVisible: false,
-        QuizContainerVisible: true
+        homeContainerVisible: false,
+        quizContainerVisible: true
       }
     })
   }
 
   render() {
-    
-    //global vars
-    const version = 2//TODO: where to put these?
-
-    if(this.state.HomeContainerVisible) {
-      return <div className="App"><HomeContainer version={version} onGotoQuiz={ this.onGotoQuiz } /></div>
+    if(this.state.homeContainerVisible) {
+      return <div className="App"><HomeContainer version={ this.state.version} onGotoQuiz={ this.onGotoQuiz } /></div>
     }
-    else if (this.state.QuizContainerVisible){
-      return <div className="App"><QuizContainer/></div>
+    else if (this.state.quizContainerVisible){
+      return <div className="App"><QuizContainer version={ this.state.version } urlPrefix={ this.state.urlPrefix }/></div>
     }
     else {
       return <div className="App"></div>
