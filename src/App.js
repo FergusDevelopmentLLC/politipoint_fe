@@ -1,9 +1,9 @@
+import HeaderLogo from "./components/HeaderLogo";
+
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        Politipoint
-      </header>
+      <HeaderLogo />
     </div>
   );
 }
