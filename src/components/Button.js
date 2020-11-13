@@ -5,7 +5,7 @@ class Button extends Component {
   render() {
 
     return  <div className="button-wrapper">
-                <button className="button" >{ this.props.buttonText }</button>
+                <button className="button" onClick={() => this.props.onGotoQuiz()}>{ this.props.buttonText }</button>
             </div>
             
   }

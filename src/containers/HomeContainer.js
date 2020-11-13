@@ -13,7 +13,7 @@ class HomeContainer extends Component {
     return (
     <Fragment>
     <HeaderLogo version={ this.props.version } />
-    <Button />
+    <Button onGotoQuiz={ this.props.onGotoQuiz } />
     <Blurb headerText={ 'The Test' } htmlContent={
       `<p>
         PolitiPoint provides insight into political leanings beyond the traditional "right" and "left" 
