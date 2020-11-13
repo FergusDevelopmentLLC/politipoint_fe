@@ -11,20 +11,11 @@ body {
   border-left-style: solid;
   border-right-style: solid;
   border-width: 1rem;
+  color: #222222;
   font-family: Arial, Helvetica, sans-serif;
 }
 
-.logo-wrapper {
-  text-align: center;
-  padding: 0;
-}
-
-.logo-wrapper img {
-  width: 20%;
-}
-
 h1, h2, h3, h4, h5, h6, h7 {
-  color: #222222;
   font-family: Arial, Helvetica, sans-serif;
   text-align: center;
   margin-top: 0pt;
@@ -33,42 +24,22 @@ h1, h2, h3, h4, h5, h6, h7 {
 
 h2 { text-align: left; } 
 
-h6 {
-  font-size: 1rem;
-  margin: .3rem 0;
-}
-
-p {
-  color: #222222;
-}
-
-.home-button-wrapper {
-  margin: 1rem 0;
-}
-
-.button {
-  display: block;
-  box-sizing: border-box;
-  text-decoration: none;
-  margin: 0 auto;
-}
-
 a {
   text-decoration: underline;
 }
 
 a:link {
-  color: #444444;
+  color: #222222;
   text-decoration: underline;
 }
 
 a:visited {
-  color: #444444;
+  color: #222222;
   text-decoration: underline;
 }
 
 a:hover {
-  color: #444444;
+  color: #222222;
   text-decoration: none;
 }
 
@@ -76,4 +47,94 @@ ol {
   list-style-position: inside;
   padding-left: .25rem;
   margin: .5rem 0;
+}
+
+/* Components */
+
+/* HeaderLogo */
+.logo-wrapper {
+  text-align: center;
+  padding: 0;
+  /* border: 1px solid red; */
+}
+
+.logo-wrapper img {
+  width: 12%;
+}
+
+/* Button */
+.button-wrapper {
+  margin: 1rem 0;
+  /* border: 1px solid blue; */
+}
+
+.button {
+  display: block;
+  text-decoration: none;
+  margin: 0 auto;
+  padding: .5rem;
+}
+
+/* Blurb */
+.blurb-wrapper {
+  /* border: 1px solid orange; */
+}
+
+/* Continuum */
+.continuums-wrapper {
+  margin: auto;
+  width: 90%;
+}
+
+.continuum-wrapper {
+  flex-wrap: nowrap;
+  margin: 0 0 3rem 0;
+}
+
+.continuum-img-wrapper, .continuum-values-wrapper {
+  display: flex;
+}
+
+.continuum-img {
+  width: 100%;
+}
+
+.continuum-li-value {
+  flex-basis: 34%;
+  padding: 0;
+}
+
+.continuum-li-value li {
+  margin: 0 0 .25rem 0;
+}
+
+.continuum-li-spacer {
+  flex-basis: 32%;
+  padding: 0;
+}
+
+.continuum-li-value li {
+  display: block;
+  text-align: center;
+}
+
+.continuum-value div {
+  text-align: center;
+  margin: auto;
+}
+
+.continuum-value {
+  text-align: center;
+  flex-basis: 34%;
+}
+
+.continuum-arrow {
+  flex-basis: 32%;
+  margin-top: 1rem;
+}
+
+
+
+.continuum-value-img {
+  width: 30%;
 }

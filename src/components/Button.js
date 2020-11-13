@@ -4,8 +4,8 @@ class Button extends Component {
 
   render() {
 
-    return  <div className="home-button-wrapper">
-                <button className="button button-home" >{ this.props.buttonText }</button>
+    return  <div className="button-wrapper">
+                <button className="button" >{ this.props.buttonText }</button>
             </div>
             
   }

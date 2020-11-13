@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import HeaderLogo from "./components/HeaderLogo";
 import Button from "./components/Button";
 import Blurb from "./components/Blurb";
+import Continuum from './components/Continuum';
 
 class App extends Component {
   render() {
@@ -19,6 +20,8 @@ class App extends Component {
             where you place on a continuum between two opposing perspectives in each of 4 categories:
           </p>`
         } />
+
+        <Continuum />
 
         <Blurb headerText={ 'Feedback' } htmlContent={
           ` <p>An important goal of this project is to improve the test in the following ways.</p>
