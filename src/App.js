@@ -61,7 +61,14 @@ class App extends Component {
               and bulk of test logic matches <a href='https://github.com/8values/8values.github.io'>8values</a>.
             </p>`
         } />
-        
+
+        <Blurb headerText={ 'Questions / Comments?' } htmlContent={
+          ` <p>
+              Follow us on twitter: <a href='https://twitter.com/politipoint/'>@politipoint</a><br/>
+              Contact us by <a href='mailto: politipoint@protonmail.com'>email</a>
+            </p>`
+        } />
+
         <Button />
       </div>
     )
