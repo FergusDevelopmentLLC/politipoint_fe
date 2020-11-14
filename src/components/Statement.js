@@ -29,6 +29,10 @@ class Statement extends Component {
         answerId: event.target.id
       }
     })
+    
+    document.querySelector('.back-next-wrapper').scrollIntoView({ 
+      behavior: 'smooth' 
+    })
   }
 
   onBackClick = (event) => {
@@ -58,6 +62,13 @@ class Statement extends Component {
         mult = 0
     }
     
+    this.setState((prevState) => {
+      return {
+        ...prevState,
+        answerId: null
+      }
+    }) 
+
     this.props.onResponse(mult)
 
   }

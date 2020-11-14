@@ -13,10 +13,10 @@ class QuizContainer extends Component {
       maxDiplomatic: 0,
       maxCivil: 0,
       maxSocietal: 0,
-      currentEconScore: 0,
-      currentDiplomaticScore: 0,
-      currentCivilScore: 0,
-      currentSocietalScore: 0
+      userEconomicScore: 0,
+      userDiplomaticScore: 0,
+      userCivilScore: 0,
+      userSocietalScore: 0
     }
   }
 
@@ -47,7 +47,35 @@ class QuizContainer extends Component {
   }
 
   onResponse = (multiplier) => {
-    console.log('multiplier', multiplier)
+    this.setState((prevState) => {
+      return {
+        ...prevState,
+        userEconomicScore:   prevState.userEconomicScore   += multiplier * prevState.questions[prevState.currentNumber].effect.econ,
+        userDiplomaticScore: prevState.userDiplomaticScore += multiplier * prevState.questions[prevState.currentNumber].effect.dipl,
+        userCivilScore:      prevState.userCivilScore      += multiplier * prevState.questions[prevState.currentNumber].effect.govt,
+        userSocietalScore:   prevState.userSocietalScore   += multiplier * prevState.questions[prevState.currentNumber].effect.scty
+      }
+    },() => {
+      //go to the next statement if not at end.
+      if (this.state.currentNumber < this.state.questions.length - 1) {
+        this.setState((prevState) => {
+          const nextNumber = prevState.currentNumber + 1
+          return {
+            ...prevState,
+            currentNumber: nextNumber,
+            currentText: prevState.questions[nextNumber].question
+          }
+        })
+      }
+      else {
+        console.log("last statement")
+      }
+
+      document.querySelector('.quiz-logo-wrapper').scrollIntoView({ 
+        behavior: 'smooth' 
+      })
+      
+    })
   }
 
   render() {
