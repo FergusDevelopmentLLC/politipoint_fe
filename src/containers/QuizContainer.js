@@ -50,14 +50,7 @@ class QuizContainer extends Component {
      await fetch(apiUrl, options)
               .then(res => res.json())
                 .then(tr => {
-                  console.log('tr', tr)
-                  // if(tr['county']) {
-                  //   window.location.href = `participation.html?${btoa(`tr_id=${tr['id']}&county_name=${tr['county']['name']}&county_geoid=${tr['county']['geoid']}&state_abbrev=${tr['county']['state_abbrev']}&e=${e}&d=${d}&g=${g}&s=${s}&v=${version}`)}`
-                  // }
-                  // else {
-                  //   window.location.href = `participation.html?${btoa(`tr_id=${tr['id']}&e=${e}&d=${d}&g=${g}&s=${s}&v=${version}`)}`
-                  // }
-
+                  this.props.onGotoParticipation()
                 })
   }
 
@@ -107,14 +100,17 @@ class QuizContainer extends Component {
             currentText: prevState.questions[nextNumber].question
           }
         })
+
+        document.querySelector('.quiz-logo-wrapper').scrollIntoView({ 
+          behavior: 'smooth' 
+        })
+        
       }
       else {
         await this.saveResult()
       }
 
-      document.querySelector('.quiz-logo-wrapper').scrollIntoView({ 
-        behavior: 'smooth' 
-      })
+      
       
     })
   }

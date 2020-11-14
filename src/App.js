@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import HomeContainer from "./containers/HomeContainer";
 import QuizContainer from './containers/QuizContainer';
+import ParticipationContainer from './containers/ParticipationContainer';
 
 class App extends Component {
   constructor() {
@@ -11,30 +12,38 @@ class App extends Component {
       quizContainerVisible: false,
       version: 2,
       urlPrefix: 'http://127.0.0.1:3000',
-
+      currentContainer: <HomeContainer version={2} onGotoQuiz={ this.onGotoQuiz } />
     }
   }
 
-  onGotoQuiz = () => {
-    this.setState(() => {
+  onGotoParticipation = () => {
+    this.setState((previousState) => {
       return {
-        homeContainerVisible: false,
-        quizContainerVisible: true
+        ...previousState,
+        currentContainer:<ParticipationContainer version={ previousState.version } />
       }
     })
   }
 
-  render() {
-    if(this.state.homeContainerVisible) {
-      return <div className="App"><HomeContainer version={ this.state.version} onGotoQuiz={ this.onGotoQuiz } /></div>
-    }
-    else if (this.state.quizContainerVisible){
-      return <div className="App"><QuizContainer version={ this.state.version } urlPrefix={ this.state.urlPrefix }/></div>
-    }
-    else {
-      return <div className="App"></div>
-    }
+  onGotoQuiz = () => {
+    this.setState((previousState) => {
+      return {
+        ...previousState,
+        currentContainer:<QuizContainer 
+                            version={ previousState.version } 
+                            urlPrefix={ previousState.urlPrefix }
+                            onGotoParticipation={ this.onGotoParticipation }
+                            />
+      }
+    })
+  }
 
+  
+
+  render() {
+    return  <div className="App">
+              { this.state.currentContainer }
+            </div>
   }
 }
 export default App

@@ -83,11 +83,11 @@ class Statement extends Component {
 
       <div className="statement-wrapper">{ this.props.currentText }</div>
 
-      <button onClick={ this.onAgreementClick } className={ this.getClassName("answer-01") } id="answer-01" style={{ backgroundColor: '#1b5e20' }}>Strongly Agree</button>
+      <button onClick={ this.onAgreementClick } className={ this.getClassName("answer-01") } id="answer-01" style={{ backgroundColor: '#1b5e20' }}>Strongly agree</button>
       <button onClick={ this.onAgreementClick } className={ this.getClassName("answer-02") } id="answer-02" style={{ backgroundColor: '#4caf50' }}>Agree</button>
-      <button onClick={ this.onAgreementClick } className={ this.getClassName("answer-03") } id="answer-03" style={{ backgroundColor: '#bbbbbb' }}>Neutral/Unsure</button>
+      <button onClick={ this.onAgreementClick } className={ this.getClassName("answer-03") } id="answer-03" style={{ backgroundColor: '#bbbbbb' }}>Neutral/unsure</button>
       <button onClick={ this.onAgreementClick } className={ this.getClassName("answer-04") } id="answer-04" style={{ backgroundColor: '#f44336' }}>Disagree</button>
-      <button onClick={ this.onAgreementClick } className={ this.getClassName("answer-05") } id="answer-05" style={{ backgroundColor: '#b71c1c' }}>Strongly Disagree</button>
+      <button onClick={ this.onAgreementClick } className={ this.getClassName("answer-05") } id="answer-05" style={{ backgroundColor: '#b71c1c' }}>Strongly disagree</button>
 
       <div className="back-next-wrapper">
         <button className={ `small_button${ this.state.backButtonOn ? "" : "_off" }` } onClick={ this.onBackClick } disabled={ this.state.backButtonOn ? '' :  'disabled' }>Back</button>
