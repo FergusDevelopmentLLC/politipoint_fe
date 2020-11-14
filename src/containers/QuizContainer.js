@@ -20,6 +20,47 @@ class QuizContainer extends Component {
     }
   }
 
+  calculateScore = (score, max) => {
+    return (100 * (max + score) / (2 * max)).toFixed(1)
+  }
+
+  saveResult = async () => {
+
+    let e = this.calculateScore(this.state.userEconomicScore, this.state.maxEconomic) 
+    let d = this.calculateScore(this.state.userDiplomaticScore, this.state.maxDiplomatic)
+    let g = this.calculateScore(this.state.userCivilScore, this.state.maxCivil) 
+    let s = this.calculateScore(this.state.userSocietalScore, this.state.maxSocietal)
+
+    let testResult = {
+      question_version: this.props.version,
+      economic: parseFloat(e),
+      diplomatic: parseFloat(d),
+      civil: parseFloat(g),
+      societal: parseFloat(s)
+    }
+    
+    const options = {
+      method: 'POST',
+      headers: new Headers({'content-type': 'application/json'}),
+      body: JSON.stringify( { test_result: testResult } )
+    }
+
+    let apiUrl = `${this.props.urlPrefix}/test_results`
+
+     await fetch(apiUrl, options)
+              .then(res => res.json())
+                .then(tr => {
+                  console.log('tr', tr)
+                  // if(tr['county']) {
+                  //   window.location.href = `participation.html?${btoa(`tr_id=${tr['id']}&county_name=${tr['county']['name']}&county_geoid=${tr['county']['geoid']}&state_abbrev=${tr['county']['state_abbrev']}&e=${e}&d=${d}&g=${g}&s=${s}&v=${version}`)}`
+                  // }
+                  // else {
+                  //   window.location.href = `participation.html?${btoa(`tr_id=${tr['id']}&e=${e}&d=${d}&g=${g}&s=${s}&v=${version}`)}`
+                  // }
+
+                })
+  }
+
   async componentDidMount() {
 
     let url = `${this.props.urlPrefix}/questions/by_version/${this.props.version}`
@@ -46,7 +87,7 @@ class QuizContainer extends Component {
     
   }
 
-  onResponse = (multiplier) => {
+  onResponse = async (multiplier) => {
     this.setState((prevState) => {
       return {
         ...prevState,
@@ -55,7 +96,7 @@ class QuizContainer extends Component {
         userCivilScore:      prevState.userCivilScore      += multiplier * prevState.questions[prevState.currentNumber].effect.govt,
         userSocietalScore:   prevState.userSocietalScore   += multiplier * prevState.questions[prevState.currentNumber].effect.scty
       }
-    },() => {
+    }, async () => {
       //go to the next statement if not at end.
       if (this.state.currentNumber < this.state.questions.length - 1) {
         this.setState((prevState) => {
@@ -68,7 +109,7 @@ class QuizContainer extends Component {
         })
       }
       else {
-        console.log("last statement")
+        await this.saveResult()
       }
 
       document.querySelector('.quiz-logo-wrapper').scrollIntoView({ 
