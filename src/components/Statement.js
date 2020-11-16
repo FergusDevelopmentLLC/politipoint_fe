@@ -5,6 +5,7 @@ class Statement extends Component {
     super(props)
     this.state = {
       nextButtonOn: false,
+      showStatementFeedbackInstructions: false,
       answerId: null,
     }
   }
@@ -72,6 +73,14 @@ class Statement extends Component {
 
   }
 
+  toggleStatementFeedbackInstructions = (event) => {
+    this.setState((previousState) => {
+      return {
+        ...previousState,
+        showStatementFeedbackInstructions: !previousState.showStatementFeedbackInstructions
+      }
+    })
+  }
 
   render() {
 
@@ -91,8 +100,8 @@ class Statement extends Component {
 
       <div className="feedback-instructions-wrapper">
         <div className="feedback-instructions">
-          <h4>Statement&nbsp;Feedback [<a href='#' id='quiz-statement-feedback-expand'>?</a>]</h4>
-          <div id='quiz-statement-feedback-desc'>Indicate below to what degree the statement above is flawed.<br />(biased, unclear or otherwise problematic)</div>
+          <h4>Statement&nbsp;Feedback [<a onClick={this.toggleStatementFeedbackInstructions} id='quiz-statement-feedback-expand'>?</a>]</h4>
+          <div style={{ display: this.state.showStatementFeedbackInstructions ? 'block' : 'none' }}>Indicate below to what degree the statement above is flawed.<br />(biased, unclear or otherwise problematic)</div>
         </div>
       </div>
 
