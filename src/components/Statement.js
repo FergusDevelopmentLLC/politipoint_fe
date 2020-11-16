@@ -98,23 +98,25 @@ class Statement extends Component {
       <button onClick={ this.onAgreementClick } className={ this.getClassName("answer-05") } id="answer-05" style={{ backgroundColor: '#b71c1c' }}>Strongly disagree</button>
 
 
-      <div className="feedback-instructions-wrapper">
-        <div className="feedback-instructions">
-          <h4>Statement&nbsp;Feedback [<a onClick={this.toggleStatementFeedbackInstructions} id='quiz-statement-feedback-expand'>?</a>]</h4>
-          <div style={{ display: this.state.showStatementFeedbackInstructions ? 'block' : 'none' }}>Indicate below to what degree the statement above is flawed.<br />(biased, unclear or otherwise problematic)</div>
+      <div className="feedback-wrapper">
+        <div className="feedback-instructions-wrapper">
+          <h4 style={{ display: this.state.showStatementFeedbackInstructions ? 'none' : 'block' }}>Is the statement above flawed?</h4>
+          <p style={{ display: this.state.showStatementFeedbackInstructions ? 'none' : 'block' }}>
+            <a id="feedback-expand" onClick={this.toggleStatementFeedbackInstructions}>Click here</a> to provide feedback (optional)
+          </p>
+          <div className="feedback-instructions" style={{ display: this.state.showStatementFeedbackInstructions ? 'block' : 'none' }}>Indicate below the degree to which statement above is flawed.<br />(biased, unclear or otherwise problematic)</div>
+        </div>
+        <div style={{ display: this.state.showStatementFeedbackInstructions ? 'block' : 'none' }}>
+          <button className="statement-button" id="feedback-01" style={{ backgroundColor: '#1b5e20' }}>No flaws</button>
+          <button className="statement-button" id="feedback-02" style={{ backgroundColor: '#4caf50' }}>Slightly flawed</button>
+          <button className="statement-button" id="feedback-03" style={{ backgroundColor: '#ff9400' }}>Significantly flawed</button>
+          <button className="statement-button" id="feedback-04" style={{ backgroundColor: '#f44336' }}>Substantially flawed</button>
+          <button className="statement-button" id="feedback-05" style={{ backgroundColor: '#b71c1c' }}>Majorly flawed</button>
+          <div className="explanation-wrapper"><textarea className="explanation" placeholder="Explain your feedback (optional)."></textarea></div>
         </div>
       </div>
 
       {/* onclick="javascript:setFeedback(0, this.id)" */}
-
-      <button className="statement-button" id="feedback-01" style={{ backgroundColor: '#1b5e20' }}>No flaws</button>
-      <button className="statement-button" id="feedback-02" style={{ backgroundColor: '#4caf50' }}>Slightly flawed</button>
-      <button className="statement-button" id="feedback-03" style={{ backgroundColor: '#ff9400' }}>Significantly flawed</button>
-      <button className="statement-button" id="feedback-04" style={{ backgroundColor: '#f44336' }}>Substantially flawed</button>
-      <button className="statement-button" id="feedback-05" style={{ backgroundColor: '#b71c1c' }}>Majorly flawed</button>
-
-      <div className="explanation-wrapper"><textarea className="explanation" placeholder="Explain your feedback (optional)."></textarea></div>
-
       <div className="back-next-wrapper">
         <button className={ `small_button${ this.state.nextButtonOn ? "" : "_off" }` } onClick={ this.onNextClick } disabled={ this.state.nextButtonOn ? '' :  'disabled' }>Next</button>
       </div>

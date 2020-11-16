@@ -195,31 +195,13 @@ ol {
   min-width: 20rem;
 }
 
-.feedback-instructions div {
-  margin: .5rem 0 0 0;
+.feedback-instructions { 
+  margin: 0 0 0 0;
 }
 
-#quiz-statement-feedback-expand {
-  margin: 0 .2rem 0 .2rem;
+#feedback-expand {
   cursor: pointer;
 }
-
-a#quiz-statement-feedback-expand {
-  text-decoration: none;
-}
-
-a#quiz-statement-feedback-expand:link {
-  text-decoration: underline;
-}
-
-a#quiz-statement-feedback-expand:visited {
-  text-decoration: underline;
-}
-
-a#quiz-statement-feedback-expand:hover {
-  text-decoration: underline;
-}
-
 
 .explanation {
 	border: 3px solid #cccccc;
