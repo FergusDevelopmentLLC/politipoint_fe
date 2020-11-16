@@ -17,7 +17,7 @@ class Statement extends Component {
   }
 
   getClassName = (id) => {
-    return this.state.answerId === id ? 'statement-response-button statement-response-button-selected' : 'statement-response-button'
+    return this.state.answerId === id ? 'statement-button statement-button-selected' : 'statement-button'
   }
 
   onAgreementClick = (event) => {
@@ -87,6 +87,24 @@ class Statement extends Component {
       <button onClick={ this.onAgreementClick } className={ this.getClassName("answer-03") } id="answer-03" style={{ backgroundColor: '#bbbbbb' }}>Neutral/unsure</button>
       <button onClick={ this.onAgreementClick } className={ this.getClassName("answer-04") } id="answer-04" style={{ backgroundColor: '#f44336' }}>Disagree</button>
       <button onClick={ this.onAgreementClick } className={ this.getClassName("answer-05") } id="answer-05" style={{ backgroundColor: '#b71c1c' }}>Strongly disagree</button>
+
+
+      <div className="feedback-instructions-wrapper">
+        <div className="feedback-instructions">
+          <h4>Statement&nbsp;Feedback [<a href='#' id='quiz-statement-feedback-expand'>?</a>]</h4>
+          <div id='quiz-statement-feedback-desc'>Indicate below to what degree the statement above is flawed.<br />(biased, unclear or otherwise problematic)</div>
+        </div>
+      </div>
+
+      {/* onclick="javascript:setFeedback(0, this.id)" */}
+
+      <button className="statement-button" id="feedback-01" style={{ backgroundColor: '#1b5e20' }}>No flaws</button>
+      <button className="statement-button" id="feedback-02" style={{ backgroundColor: '#4caf50' }}>Slightly flawed</button>
+      <button className="statement-button" id="feedback-03" style={{ backgroundColor: '#ff9400' }}>Significantly flawed</button>
+      <button className="statement-button" id="feedback-04" style={{ backgroundColor: '#f44336' }}>Substantially flawed</button>
+      <button className="statement-button" id="feedback-05" style={{ backgroundColor: '#b71c1c' }}>Majorly flawed</button>
+
+      <div className="explanation-wrapper"><textarea className="explanation" placeholder="Explain your feedback (optional)."></textarea></div>
 
       <div className="back-next-wrapper">
         <button className={ `small_button${ this.state.nextButtonOn ? "" : "_off" }` } onClick={ this.onNextClick } disabled={ this.state.nextButtonOn ? '' :  'disabled' }>Next</button>
