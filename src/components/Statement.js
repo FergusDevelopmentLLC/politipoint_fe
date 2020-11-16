@@ -4,7 +4,6 @@ class Statement extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      backButtonOn: props.currentNumber > 1 ? true : false,
       nextButtonOn: false,
       answerId: null,
     }
@@ -90,7 +89,6 @@ class Statement extends Component {
       <button onClick={ this.onAgreementClick } className={ this.getClassName("answer-05") } id="answer-05" style={{ backgroundColor: '#b71c1c' }}>Strongly disagree</button>
 
       <div className="back-next-wrapper">
-        <button className={ `small_button${ this.state.backButtonOn ? "" : "_off" }` } onClick={ this.onBackClick } disabled={ this.state.backButtonOn ? '' :  'disabled' }>Back</button>
         <button className={ `small_button${ this.state.nextButtonOn ? "" : "_off" }` } onClick={ this.onNextClick } disabled={ this.state.nextButtonOn ? '' :  'disabled' }>Next</button>
       </div>
 
