@@ -7,6 +7,8 @@ class Statement extends Component {
       nextButtonOn: false,
       showStatementFeedbackInstructions: false,
       answerId: null,
+      feedbackId: null,
+      feedbackExplanation: ''
     }
   }
 
@@ -19,6 +21,10 @@ class Statement extends Component {
 
   getClassName = (id) => {
     return this.state.answerId === id ? 'statement-button statement-button-selected' : 'statement-button'
+  }
+
+  getFeedbackButtonClassName = (id) => {
+    return this.state.feedbackId === id ? 'statement-button statement-button-selected' : 'statement-button'
   }
 
   onAgreementClick = (event) => {
@@ -35,8 +41,18 @@ class Statement extends Component {
     })
   }
 
-  onBackClick = (event) => {
-    console.log('onNextClick')
+  onFeedbackClick = (event) => {
+
+    this.setState((previousState) => {
+      return {
+        ...previousState,
+        feedbackId: event.target.id
+      }
+    })
+    
+    document.querySelector('.back-next-wrapper').scrollIntoView({ 
+      behavior: 'smooth' 
+    })
   }
 
   onNextClick = (event) => {
@@ -65,9 +81,55 @@ class Statement extends Component {
     this.setState((prevState) => {
       return {
         ...prevState,
-        answerId: null
+        showStatementFeedbackInstructions: false,
+        nextButtonOn: false,
+        answerId: null,
+        feedbackId: null,
+        feedbackExplanation: ''
       }
-    }) 
+    })
+
+    if(this.state.feedbackId || this.state.feedbackExplanation) {
+
+      let feedbackScore
+
+      switch(this.state.feedbackId) {
+        case "feedback-01":
+          feedbackScore = 0
+          break
+        case "feedback-02":
+          feedbackScore = 10
+          break
+        case "feedback-03":
+          feedbackScore = 20
+          break
+        case "feedback-04":
+          feedbackScore = 30
+          break
+        case "feedback-05":
+          feedbackScore = 40
+          break
+        default:
+          feedbackScore = 0
+      }
+
+      const feedback = {
+        score: feedbackScore
+      }
+      
+      if(this.state.feedbackExplanation) feedback.explanation = this.state.feedbackExplanation
+      
+      this.props.onFeedbackGiven(feedback)
+
+      this.setState((previousState) => {
+        return {
+          ...previousState,
+          feedbackId: null,
+          feedExplanation: ''
+        }
+      })
+
+    }
 
     this.props.onResponse(mult)
 
@@ -107,12 +169,19 @@ class Statement extends Component {
           <div className="feedback-instructions" style={{ display: this.state.showStatementFeedbackInstructions ? 'block' : 'none' }}>Indicate below the degree to which statement above is flawed.<br />(biased, unclear or otherwise problematic)</div>
         </div>
         <div style={{ display: this.state.showStatementFeedbackInstructions ? 'block' : 'none' }}>
-          <button className="statement-button" id="feedback-01" style={{ backgroundColor: '#1b5e20' }}>No flaws</button>
-          <button className="statement-button" id="feedback-02" style={{ backgroundColor: '#4caf50' }}>Slightly flawed</button>
-          <button className="statement-button" id="feedback-03" style={{ backgroundColor: '#ff9400' }}>Significantly flawed</button>
-          <button className="statement-button" id="feedback-04" style={{ backgroundColor: '#f44336' }}>Substantially flawed</button>
-          <button className="statement-button" id="feedback-05" style={{ backgroundColor: '#b71c1c' }}>Majorly flawed</button>
-          <div className="explanation-wrapper"><textarea className="explanation" placeholder="Explain your feedback (optional)."></textarea></div>
+          <button onClick={ this.onFeedbackClick } className={ this.getFeedbackButtonClassName("feedback-01") } id="feedback-01" style={{ backgroundColor: '#1b5e20' }}>No flaws</button>
+          <button onClick={ this.onFeedbackClick } className={ this.getFeedbackButtonClassName("feedback-02") } id="feedback-02" style={{ backgroundColor: '#4caf50' }}>Slightly flawed</button>
+          <button onClick={ this.onFeedbackClick } className={ this.getFeedbackButtonClassName("feedback-03") } id="feedback-03" style={{ backgroundColor: '#ff9400' }}>Significantly flawed</button>
+          <button onClick={ this.onFeedbackClick } className={ this.getFeedbackButtonClassName("feedback-04") } id="feedback-04" style={{ backgroundColor: '#f44336' }}>Substantially flawed</button>
+          <button onClick={ this.onFeedbackClick } className={ this.getFeedbackButtonClassName("feedback-05") } id="feedback-05" style={{ backgroundColor: '#b71c1c' }}>Majorly flawed</button>
+          <div className="explanation-wrapper">
+            <textarea onChange={(event) => {
+              this.setState(previousState => {
+                return {...previousState, feedbackExplanation: event.target.value }
+              })
+            }} className="explanation" placeholder="Explain your feedback (optional)." value={ this.state.feedbackExplanation }>
+            </textarea>
+          </div>
         </div>
       </div>
 

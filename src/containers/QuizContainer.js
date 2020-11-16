@@ -7,7 +7,7 @@ class QuizContainer extends Component {
     super()
     this.state = {
       questions: [],
-      currentNumber: 21,
+      currentNumber: 20,
       currentText: 'Loading...',
       maxEconomic: 0,
       maxDiplomatic: 0,
@@ -47,11 +47,11 @@ class QuizContainer extends Component {
 
     let apiUrl = `${this.props.urlPrefix}/test_results`
 
-     await fetch(apiUrl, options)
-              .then(res => res.json())
-                .then(tr => {
-                  this.props.onGotoParticipation()
-                })
+    await fetch(apiUrl, options)
+            .then(res => res.json())
+              .then(tr => {
+                this.props.onGotoParticipation()
+              })
   }
 
   async componentDidMount() {
@@ -59,12 +59,13 @@ class QuizContainer extends Component {
     let url = `${this.props.urlPrefix}/questions/by_version/${this.props.version}`
     
     let questions = await fetch(url).then(r => r.json())
-    
+
     this.setState((previousState) => {
       return {
         ...previousState,
         questions: questions,
-        currentText: questions[previousState.currentNumber].question
+        currentText: questions[previousState.currentNumber].question,
+        questionIterationId: questions[previousState.currentNumber].question_iteration_id
       }
     }, () => {
       this.setState((previousState) => {
@@ -109,10 +110,26 @@ class QuizContainer extends Component {
       else {
         await this.saveResult()
       }
-
-      
-      
     })
+  }
+
+  onFeedbackGiven = async (feedback) => {
+
+    feedback.question_iteration_id = this.state.questions[this.state.currentNumber].question_iteration_id
+
+    const options = {
+      method: 'POST',
+      headers: new Headers({'content-type': 'application/json'}),
+      body: JSON.stringify( { question_feedback: feedback } )
+    }
+
+    let apiUrl = `${this.props.urlPrefix}/question_feedbacks`
+
+    await fetch(apiUrl, options)
+            .then(res => res.json())
+              .then(feedback => {
+                console.log('feedback saved', feedback)
+              })
   }
 
   render() {
@@ -125,8 +142,9 @@ class QuizContainer extends Component {
       <Statement 
         currentText={ this.state.currentText } 
         currentNumber={ this.state.currentNumber } 
-        allStatementsCount={ this.state.questions.length } 
+        allStatementsCount={ this.state.questions.length }
         onResponse={ this.onResponse }
+        onFeedbackGiven={ this.onFeedbackGiven }
         />
 
       </Fragment>
