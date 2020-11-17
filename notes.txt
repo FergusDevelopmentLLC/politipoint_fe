@@ -1,2 +1,3 @@
 https://stackoverflow.com/questions/39758136/render-html-string-as-real-html-in-a-react-component
 https://github.com/facebook/create-react-app/issues/3513
+https://www.carlrippon.com/react-drop-down-data-binding/

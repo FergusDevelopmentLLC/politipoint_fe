@@ -7,7 +7,7 @@ class QuizContainer extends Component {
     super()
     this.state = {
       questions: [],
-      currentNumber: 20,
+      currentNumber: 23,
       currentText: 'Loading...',
       maxEconomic: 0,
       maxDiplomatic: 0,
@@ -46,11 +46,10 @@ class QuizContainer extends Component {
     }
 
     let apiUrl = `${this.props.urlPrefix}/test_results`
-
     await fetch(apiUrl, options)
             .then(res => res.json())
               .then(tr => {
-                this.props.onGotoParticipation()
+                this.props.onGotoParticipation(tr)//tr should have the county now, after saving
               })
   }
 
@@ -128,7 +127,7 @@ class QuizContainer extends Component {
     await fetch(apiUrl, options)
             .then(res => res.json())
               .then(feedback => {
-                console.log('feedback saved', feedback)
+                //console.log('feedback saved', feedback)
               })
   }
 
@@ -146,7 +145,6 @@ class QuizContainer extends Component {
         onResponse={ this.onResponse }
         onFeedbackGiven={ this.onFeedbackGiven }
         />
-
       </Fragment>
     )
   }

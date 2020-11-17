@@ -159,7 +159,6 @@ class Statement extends Component {
       <button onClick={ this.onAgreementClick } className={ this.getClassName("answer-04") } id="answer-04" style={{ backgroundColor: '#f44336' }}>Disagree</button>
       <button onClick={ this.onAgreementClick } className={ this.getClassName("answer-05") } id="answer-05" style={{ backgroundColor: '#b71c1c' }}>Strongly disagree</button>
 
-
       <div className="feedback-wrapper">
         <div className="feedback-instructions-wrapper">
           <h4 style={{ display: this.state.showStatementFeedbackInstructions ? 'none' : 'block' }}>Is the statement above flawed?</h4>
