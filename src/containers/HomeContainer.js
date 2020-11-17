@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react'
 import HeaderLogo from "../components/HeaderLogo"
 import Button from "../components/Button"
 import Blurb from "../components/Blurb"
-import Continuum from '../components/Continuum'
+import ContinuumStatic from '../components/ContinuumStatic'
 
 class HomeContainer extends Component {
   
@@ -23,8 +23,8 @@ class HomeContainer extends Component {
       </p>`
     } />
 
-    <Continuum />
-
+    <ContinuumStatic />
+    
     <Blurb headerText={ 'Feedback' } htmlContent={
       ` <p>An important goal of this project is to improve the test in the following ways.</p>
         <ol>

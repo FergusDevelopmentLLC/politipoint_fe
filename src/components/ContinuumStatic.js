@@ -1,7 +1,7 @@
 
 import React, { Component } from 'react'
 
-class Continuum extends Component {
+class ContinuumStatic extends Component {
   render() {
     return (
       <div className="continuums-wrapper">
@@ -113,4 +113,4 @@ class Continuum extends Component {
   }
 }
 
-export default Continuum
+export default ContinuumStatic
