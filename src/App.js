@@ -65,6 +65,7 @@ class App extends Component {
         
         <Route path="/results/:economic/:diplomatic/:civil/:societal" exact render={(props) => (
           <ResultsContainer 
+            {...props}
             testResult={ {
               economic: parseFloat(props.match.params.economic),
               diplomatic: parseFloat(props.match.params.diplomatic),
