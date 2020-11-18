@@ -350,8 +350,7 @@ svg {
   color: #444444;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 1rem;
-  line-height: 1rem;
-}
+  line-height: 1rem;}
 
 #results-map {
   margin-bottom: .5rem;
@@ -374,7 +373,6 @@ svg {
 
 .results-continuum {
   margin-bottom: 1rem;
-  border: 1px solid brown;
 }
 
 h5 {

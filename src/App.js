@@ -20,6 +20,20 @@ class App extends Component {
     }
   }
 
+  onGotoHome = ( version ) => {
+    this.setState((previousState) => {
+      return {
+        ...previousState,
+        version: version, 
+        currentContainer:<HomeContainer 
+                            version={ version } 
+                            urlPrefix={ previousState.urlPrefix }
+                            onGotoQuiz={ this.onGotoQuiz }
+                            />
+      }
+    })
+  }
+
   onGotoQuiz = () => {
     this.setState((previousState) => {
       return {
@@ -51,7 +65,11 @@ class App extends Component {
     this.setState((previousState) => {
       return {
         ...previousState,
-        currentContainer:<ResultsContainer testResult={ testResult } />
+        currentContainer:<ResultsContainer 
+                          testResult={ testResult } 
+                          urlPrefix={ previousState.urlPrefix } 
+                          onGotoHome={ this.onGotoHome }
+                          />
       }
     })
   }

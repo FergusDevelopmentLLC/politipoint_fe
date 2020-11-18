@@ -44,83 +44,37 @@ class Continuum extends Component {
 
       let lineValue = previousState.flip ? (100 - previousState.lineValue) : previousState.lineValue
 
+      let leftImg = previousState.imageLeft
+      let rightImg = previousState.imageRight
+
+      if(previousState.type === 'economic') {
+        leftImg = previousState.imageLeft
+        rightImg = previousState.imageRight
+      }
+      else if (previousState.type === 'diplomatic') {
+        leftImg = 'https://res.cloudinary.com/fergusdev/image/upload/v1603210184/politipoint/axis/world_gsftlk.png'
+        rightImg = 'https://res.cloudinary.com/fergusdev/image/upload/v1603210184/politipoint/axis/nation_ovlorq.png'
+      }
+      else if (previousState.type === 'civil') {
+        leftImg = 'https://res.cloudinary.com/fergusdev/image/upload/v1603210184/politipoint/axis/authority_ymkmvq.png'
+        rightImg = 'https://res.cloudinary.com/fergusdev/image/upload/v1603210184/politipoint/axis/liberty_cmq4hm.png'
+      }
+      else if (previousState.type === 'societal') {
+        leftImg = 'https://res.cloudinary.com/fergusdev/image/upload/v1603210184/politipoint/axis/progress_ygaeoo.png'
+        rightImg = 'https://res.cloudinary.com/fergusdev/image/upload/v1603210184/politipoint/axis/tradition_lgt21n.png'
+      }
+
       return {
         ...previousState,
         height: height,
         lineValue: lineValue,
         leftPercentText: leftPercentText,
         rightPercentText: rightPercentText,
-        linePosition: (lineValue * previousState.width) / 100 
+        linePosition: (lineValue * previousState.width) / 100,
+        imageLeft: leftImg,
+        imageRight: rightImg
       }
-    },() => {
-      console.log(this.state)
     })
-
-    //   let leftPercent = (lineValue * 100) / 100
-    //   let rightPercent = (100 - ((lineValue * 100) / 100))
-
-    //   let leftPercentText = ''
-    //   let rightPercentText = ''
-
-    //   if (leftPercent > rightPercent) leftPercentText = `${leftPercent.toFixed(0)}%`
-    //   if (rightPercent > leftPercent) rightPercentText = `${rightPercent.toFixed(0)}%`
-  }
-
-
-  getBar = (type, value, flip) => {
-
-    let defs = `<defs>
-                  <linearGradient id="gradient">
-                    <stop className="blue-stop" offset="0%" />
-                    <stop className="red-stop" offset="100%" />
-                  </linearGradient>
-                </defs>`
-
-    console.log('type', type)
-    //let width = document.getElementById(`bar-${type}`).offsetWidth
-    
-    let width = 200
-
-    if (width > 0) {
-      let height = .05 * width
-
-      if (width < 1025) {
-        height = .1 * width
-      }
-
-      if (width < 450) {
-        height = .15 * width
-      }
-
-      let lineValue = value
-
-      if (flip) {
-        lineValue = (100 - value)
-      }
-      let linePosition = (lineValue * width) / 100
-
-      let leftPercent = (lineValue * 100) / 100
-      let rightPercent = (100 - ((lineValue * 100) / 100))
-
-      let leftPercentText = ''
-      let rightPercentText = ''
-
-      if (leftPercent > rightPercent) leftPercentText = `${leftPercent.toFixed(0)}%`
-      if (rightPercent > leftPercent) rightPercentText = `${rightPercent.toFixed(0)}%`
-
-      let barSvg =
-        `<svg viewBox="0 0 ${width} ${height}">
-          ${defs}
-          <g>
-            <rect className="bar" width="${width}" height="${height}" />
-            <line className="line" x1="${linePosition}" y1="0" x2="${linePosition}" y2="${height}" />
-            <text x="${(width * .01)}" y="${height - (.35 * height)}" className="bar-text">${rightPercentText}</text>
-            <text x="${width - (width * .01)}" y="${height - (.35 * height)}" className="bar-text" text-anchor="end">${leftPercentText}</text>
-          </g>
-        </svg>`
-
-      return barSvg
-    }
   }
 
   render() {
@@ -131,7 +85,7 @@ class Continuum extends Component {
     }
 
     return <div className="results-continuum">
-      <h2>{ this.state.type.toProperCase() }: <span className="weight-300" id="economic-label">Centrist</span></h2>
+  <h2>{ this.state.type.toProperCase() }: <span className="weight-300">{ this.props.match }</span></h2>
       <div className="axis">
         <div className="results-img-wrapper">
           <img className="result-axis-image" src={ this.state.imageLeft } />

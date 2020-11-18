@@ -43,8 +43,6 @@ class ParticipationContainer extends Component {
       
       return rebuilt
 
-    }, () => {
-      //console.log(this.state)
     })
   }
   
@@ -84,8 +82,6 @@ class ParticipationContainer extends Component {
                   opt_in: previousState.testResult.opt_in === true ? false : true
                 }
               }
-            },() => {
-              //console.log(this.state)
             })
           }} type="checkbox" id="optinout" className="optin-out-checkbox" checked={ this.state.testResult.opt_in ? "checked" : ""} />
           <label className="optinout-label" htmlFor="optinout">

@@ -39,10 +39,6 @@ class StateCountySelector extends Component {
         return county.geoid === this.props.selectedCountyGeoId
       }).geoid
 
-      // console.log('counties', counties)
-      // console.log('stateAbbrev', stateAbbrev)
-      // console.log('countyGeoId', countyGeoId)
-      
       return {
         ...previousState,
         stateCounties: StateCounty,

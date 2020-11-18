@@ -7,7 +7,7 @@ class QuizContainer extends Component {
     super()
     this.state = {
       questions: [],
-      currentNumber: 23,
+      currentNumber: 0,
       currentText: 'Loading...',
       maxEconomic: 0,
       maxDiplomatic: 0,
