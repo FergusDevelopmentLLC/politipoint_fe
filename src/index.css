@@ -266,3 +266,127 @@ ol {
   margin: 0 0 .5rem 0;
 }
 
+/* ResultsContainer */
+
+.result-axis-image {
+  width: 100%;
+}
+
+
+/* bar svg */
+.result-axis-image {
+  width: 100%;
+}
+
+.bar-wrapper {
+  margin: 0;
+  text-align: center;
+  width: 100%;
+  border-top: .3rem solid #222222;
+  border-bottom: .3rem solid #222222;
+}
+
+/* bar svg */
+svg {
+    display: block;
+    margin: auto;
+}
+  
+.bar {
+    fill: url(#gradient);
+}
+
+.line {
+    stroke:rgb(247,209,55);
+    stroke-width: 2.5
+}
+
+.red-stop {
+    stop-color: #ff0000;
+}
+
+.blue-stop {
+    stop-color: #0015bc;
+}
+
+.axis {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.axis div {
+  /* border: 1px solid brown; */
+}
+
+#results-economic, #results-diplomatic, #results-civil, #results-societal {
+  /* display: none; */
+}
+
+#results-economic, #results-diplomatic, #results-civil, #results-societal, #results-ideology {
+  width: 100%;
+  margin: auto;
+}
+
+#results-ideology p {
+  color: #444444;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1.25rem;
+  line-height: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+#results-ideology {
+  margin-bottom: 1rem;
+}
+
+.bar-text {
+  fill: #ffffff;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1rem;
+}
+
+#results-ideology p, #results-map p {
+  color: #444444;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1rem;
+  line-height: 1rem;
+}
+
+#results-map {
+  margin-bottom: .5rem;
+}
+
+#map-container {
+  background: #808080;
+  padding: 2rem;
+  border-radius: 10px;
+}
+
+#results-back {
+  margin: 0;
+}
+
+#results-container {
+  width: 97%;
+  margin: auto;
+}
+
+.results-continuum {
+  margin-bottom: 1rem;
+  border: 1px solid brown;
+}
+
+h5 {
+  margin: 0 0 .2rem 0;
+}
+
+a:link {
+  text-decoration: underline;
+  color: #222222;
+}
+  
+a:visited {
+    text-decoration: underline;
+    color: #222222;
+}
