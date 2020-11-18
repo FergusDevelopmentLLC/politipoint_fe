@@ -3,6 +3,7 @@ import HeaderLogo from "../components/HeaderLogo"
 import Button from "../components/Button"
 import Blurb from "../components/Blurb"
 import ContinuumStatic from '../components/ContinuumStatic'
+import { MapboxGLMap } from '../components/MapboxGLMap'
 
 class HomeContainer extends Component {
   
@@ -24,6 +25,20 @@ class HomeContainer extends Component {
     } />
 
     <ContinuumStatic />
+
+    <h2>Test results map</h2>
+    <p>
+      Upon test completion, the test taker is given the option to aggregate their results with others based on county. 
+      Click/tap on a county in the map below to see aggregated details for that county. Click the extrude map button 
+      to see information about test result counts per county. 
+    </p>
+    <div class="map-wrapper">
+      <MapboxGLMap />
+    </div>
+    <p>
+      The map above is randomly generated for illustration purposes and do not reflect actual tests results. For actual 
+      test results, visit the <a href='map.html'>results map</a>
+    </p>
     
     <Blurb headerText={ 'Feedback' } htmlContent={
       ` <p>An important goal of this project is to improve the test in the following ways.</p>
