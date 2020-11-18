@@ -1,83 +1,82 @@
 import React, { Component } from 'react'
+import { Route, Redirect, BrowserRouter  as Router } from "react-router-dom"
+
 import HomeContainer from "./containers/HomeContainer";
 import QuizContainer from './containers/QuizContainer';
 import ParticipationContainer from './containers/ParticipationContainer';
 import ResultsContainer from './containers/ResultsContainer';
+import MapContainer from './containers/MapContainer';
 
 class App extends Component {
   constructor() {
     super()
     
     this.state = {
-      homeContainerVisible: true,
-      quizContainerVisible: false,
       version: 2,
       urlPrefix: 'http://127.0.0.1:3000',
-      currentContainer: <HomeContainer 
-                            version={2} 
-                            onGotoQuiz={ this.onGotoQuiz } 
-                            />
+      testResult: null
     }
   }
 
-  onGotoHome = ( version ) => {
+  setTestResult = (testResult) => {
     this.setState((previousState) => {
       return {
         ...previousState,
-        version: version, 
-        currentContainer:<HomeContainer 
-                            version={ version } 
-                            urlPrefix={ previousState.urlPrefix }
-                            onGotoQuiz={ this.onGotoQuiz }
-                            />
+        testResult: testResult
       }
     })
   }
 
-  onGotoQuiz = () => {
-    this.setState((previousState) => {
-      return {
-        ...previousState,
-        currentContainer:<QuizContainer 
-                            version={ previousState.version } 
-                            urlPrefix={ previousState.urlPrefix }
-                            onGotoParticipation={ this.onGotoParticipation }
-                            />
-      }
-    })
-  }
-
-  onGotoParticipation = (testResult) => {
-    this.setState((previousState) => {
-      return {
-        ...previousState,
-        currentContainer:<ParticipationContainer 
-                            version={ previousState.version }
-                            urlPrefix={ previousState.urlPrefix }
-                            testResult={ testResult }
-                            onGotoResult={ this.onGotoResult }
-                            />
-      }
-    })
-  }
-
-  onGotoResult = (testResult) => {
-    this.setState((previousState) => {
-      return {
-        ...previousState,
-        currentContainer:<ResultsContainer 
-                          testResult={ testResult } 
-                          urlPrefix={ previousState.urlPrefix } 
-                          onGotoHome={ this.onGotoHome }
-                          />
-      }
-    })
-  }
-  
   render() {
-    return  <div className="App">
-              { this.state.currentContainer }
-            </div>
-  }
+    
+    return (
+      <Router>
+        
+        <Route path="/" exact render={(props) => (
+          <HomeContainer
+            {...props}
+            version={ this.state.version }
+            />)} />
+
+        <Route path="/quiz" exact render={(props) => (
+          <QuizContainer 
+            {...props}
+            version={ this.state.version } 
+            urlPrefix={ this.state.urlPrefix }
+            setTestResult={ this.setTestResult }
+          />
+        )} />
+
+        <Route path="/participation" exact render={(props) => (
+          <ParticipationContainer 
+            {...props}
+            version={ this.state.version } 
+            urlPrefix={ this.state.urlPrefix }
+            testResult={ this.state.testResult }
+            setTestResult={ this.setTestResult }
+          />
+        )} />
+
+        <Route path="/map" exact render={(props) => (
+          <MapContainer
+            {...props}
+           />
+        )} />
+        
+        <Route path="/results/:economic/:diplomatic/:civil/:societal" exact render={(props) => (
+          <ResultsContainer 
+            testResult={ {
+              economic: parseFloat(props.match.params.economic),
+              diplomatic: parseFloat(props.match.params.diplomatic),
+              civil: parseFloat(props.match.params.civil),
+              societal: parseFloat(props.match.params.societal)
+            } } 
+            urlPrefix={ this.state.urlPrefix }
+          />
+        )} />
+
+      </Router>
+    )  
+  } 
 }
 export default App

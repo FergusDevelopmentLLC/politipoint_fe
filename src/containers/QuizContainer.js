@@ -49,7 +49,8 @@ class QuizContainer extends Component {
     await fetch(apiUrl, options)
             .then(res => res.json())
               .then(tr => {
-                this.props.onGotoParticipation(tr)//tr should have the county now, after saving
+                this.props.setTestResult(tr)//tr should have the county now, after saving
+                this.props.history.push('/participation')
               })
   }
 

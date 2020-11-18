@@ -19,25 +19,19 @@ class StateCountySelector extends Component {
       let stateAbbrev = ''
       let countyGeoId = 0
 
-      counties = StateCounty.find((state) => {
+      let state = StateCounty.find((state) => {
         return state.counties.map((county) => {
           return county.geoid
         }).includes(this.props.selectedCountyGeoId)
-      }).counties
+      })
 
-      stateAbbrev = StateCounty.find((state) => {
-        return state.counties.map((county) => {
-          return county.geoid
-        }).includes(this.props.selectedCountyGeoId)
-      }).abbrev
-
-      countyGeoId = StateCounty.find((state) => {
-        return state.counties.map((county) => {
-          return county.geoid
-        }).includes(this.props.selectedCountyGeoId)
-      }).counties.find((county) => {
-        return county.geoid === this.props.selectedCountyGeoId
-      }).geoid
+      if(state) {
+        counties = state.counties
+        stateAbbrev = state.abbrev
+        countyGeoId = state.counties.find((county) => {
+          return county.geoid === this.props.selectedCountyGeoId
+        }).geoid
+      }
 
       return {
         ...previousState,

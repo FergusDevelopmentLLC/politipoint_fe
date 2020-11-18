@@ -1,4 +1,6 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
+
 import Continuum from '../components/Continuum'
 import { MapboxGLMap } from '../components/MapboxGLMap'
 
@@ -76,9 +78,7 @@ class ResultsContainer extends Component {
                 Contact us by <a href="politipoint@protonmail.com">email</a><br/>
               </p>
               <div className="button-wrapper">
-                <button className="button" onClick={() => {
-                  this.props.onGotoHome( this.props.testResult.question_version )
-                }}>Back</button>
+                <Link className='button' to='/'>Back</Link>
               </div>
             </div>
            

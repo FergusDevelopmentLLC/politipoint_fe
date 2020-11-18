@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import StateCountySelector from '../components/StateCountySelector'
+import { Link } from 'react-router-dom'
 
 class ParticipationContainer extends Component {
   constructor(props) {
@@ -10,7 +11,7 @@ class ParticipationContainer extends Component {
   }
 
   getLocationText = () => {
-    if( this.props.testResult.county ) {
+    if( this.props.testResult && this.props.testResult.county ) {
 
       let htmlContent = `Based on your IP address, your local county has been approximated to be: 
                          <strong>${ this.props.testResult.county.name }, ${this.props.testResult.county.state_abbrev}</strong>. If wish to affiliate 
@@ -65,7 +66,7 @@ class ParticipationContainer extends Component {
         <h2>Location</h2>
         <p className="thankyou-instructions">{ this.getLocationText() }</p>
 
-        <StateCountySelector selectedCountyGeoId={ this.state.testResult.county ? this.state.testResult.county.geoid : 0 } onCountyChange={ this.setTestResultCounty } />
+        <StateCountySelector selectedCountyGeoId={ this.state.testResult && this.state.testResult.county ? this.state.testResult.county.geoid : 0 } onCountyChange={ this.setTestResultCounty } />
         
         <h2>Share your results?</h2>
         <p className="thankyou-instructions">
@@ -83,16 +84,19 @@ class ParticipationContainer extends Component {
                 }
               }
             })
-          }} type="checkbox" id="optinout" className="optin-out-checkbox" checked={ this.state.testResult.opt_in ? "checked" : ""} />
+          }} type="checkbox" id="optinout" className="optin-out-checkbox" checked={ this.state.testResult && this.state.testResult.opt_in ? "checked" : ""} />
           <label className="optinout-label" htmlFor="optinout">
             I agree to share my test results
           </label>
         </div>
 
         <div className="button-wrapper">
-          <button className="button" onClick={ async () => {
+          <Link className='button' to="#" onClick={ async () => {
 
-            
+            if(!this.state.testResult || (this.state.testResult && !this.state.testResult.economic)) {
+              return
+            }
+
             if(this.state.testResult.county || !this.state.testResult.opt_in) {
 
               let testResultForSaving = {
@@ -116,13 +120,15 @@ class ParticipationContainer extends Component {
 
               let apiUrl = `${ this.props.urlPrefix }/test_results_check`
               let savedTestResult = await fetch(apiUrl, options).then(r => r.json())
-
-              this.props.onGotoResult(savedTestResult)
+              console.log('savedTestResult', savedTestResult)
+              this.props.setTestResult(savedTestResult)
+              this.props.history.push(`/results/${ savedTestResult.economic }/${ savedTestResult.diplomatic }/${ savedTestResult.civil }/${ savedTestResult.societal }`)
             }
             else {
               alert("Please select a county or opt out of sharing your test results.")
             }
-          }}>View test results and map</button>
+
+          }}>View test results and map</Link>
         </div>
 
       </Fragment>

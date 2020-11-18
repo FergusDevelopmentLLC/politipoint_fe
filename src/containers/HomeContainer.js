@@ -1,9 +1,9 @@
 import React, { Component, Fragment } from 'react'
 import HeaderLogo from "../components/HeaderLogo"
-import Button from "../components/Button"
 import Blurb from "../components/Blurb"
 import ContinuumStatic from '../components/ContinuumStatic'
 import { MapboxGLMap } from '../components/MapboxGLMap'
+import { Link } from 'react-router-dom'
 
 class HomeContainer extends Component {
   
@@ -13,7 +13,11 @@ class HomeContainer extends Component {
     return (
     <Fragment>
     <HeaderLogo version={ this.props.version } />
-    <Button onGotoQuiz={ this.props.onGotoQuiz } />
+    
+    <div className="button-wrapper">
+      <Link className='button' to='/quiz'>Click/tap here to begin</Link>
+    </div>
+
     <Blurb headerText={ 'The Test' } htmlContent={
       `<p>
         PolitiPoint provides insight into political leanings beyond the traditional "right" and "left" 
@@ -32,7 +36,7 @@ class HomeContainer extends Component {
       Click/tap on a county in the map below to see aggregated details for that county. Click the extrude map button 
       to see information about test result counts per county. 
     </p>
-    <div class="map-wrapper">
+    <div className="map-wrapper">
       <MapboxGLMap />
     </div>
     <p>
@@ -89,7 +93,11 @@ class HomeContainer extends Component {
         </p>`
     } />
 
-    <Button onGotoQuiz={ this.props.onGotoQuiz } />
+    <div className="button-wrapper">
+      <Link className='button' to='/quiz'>Click/tap here to begin</Link>
+    </div>
+
+
     </Fragment>
     )
   }
