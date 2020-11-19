@@ -9,22 +9,14 @@ class IdeologiesContainer extends Component {
     }
   }
 
-  getIdeologies = async () => {
-    return await fetch(`${ this.props.urlPrefix }/ideologies`).then(r => r.json())
-  }
-
   async componentDidMount () {
-    
-    let ideologies = await this.getIdeologies()
-    
+    const ideologies = await fetch(`${ this.props.urlPrefix }/ideologies`).then(r => r.json())
     this.setState((previousState) => {
       return {
         ...previousState,
         ideologies: ideologies
       }
     })
-    
-
   }
   
   render() {
