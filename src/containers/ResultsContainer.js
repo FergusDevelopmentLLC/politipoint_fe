@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-
-import Continuum from '../components/Continuum'
+import { HeaderLogo } from '../components/HeaderLogo'
+import { Continuum } from '../components/Continuum'
 import { MapboxGLMap } from '../components/MapboxGLMap'
 
 class ResultsContainer extends Component {
@@ -42,16 +42,13 @@ class ResultsContainer extends Component {
   render() {
 
     return  <div id='results-container'>
-              <div className='logo-wrapper'>
-                <img src='https://res.cloudinary.com/fergusdev/image/upload/v1602701054/politipoint/logos/politipoint-vertical-color_txkgp9.png' title='PolitiPoint.org' />
-              </div>
-              <hr/>
+              <HeaderLogo version={ this.props.version } />
               <h3>Test Results</h3>
               <div id="results-container">
-                <Continuum type='economic' match={ this.state.economicMatch } value={ this.state.testResult.economic } flip={ true }/>
-                <Continuum type='diplomatic' match={ this.state.diplomaticMatch }  value={ this.state.testResult.diplomatic } flip={ false }/>
-                <Continuum type='civil' match={ this.state.civilMatch } value={ this.state.testResult.societal } flip={ true }/>
-                <Continuum type='societal' match={ this.state.societalMatch } value={ this.state.testResult.societal } flip={ true }/>
+                <Continuum type='economic'    match={ this.state.economicMatch }    value={ this.state.testResult.economic } flip={ true }/>
+                <Continuum type='diplomatic'  match={ this.state.diplomaticMatch }  value={ this.state.testResult.diplomatic } flip={ false }/>
+                <Continuum type='civil'       match={ this.state.civilMatch }       value={ this.state.testResult.civil } flip={ true }/>
+                <Continuum type='societal'    match={ this.state.societalMatch }    value={ this.state.testResult.societal } flip={ true }/>
               </div>
               <h2>Ideology match: { this.state.ideologyMatchName }</h2>
               <div id="results-ideology">
@@ -68,9 +65,7 @@ class ResultsContainer extends Component {
               </div>
 
               <h2>Don't agree your results?</h2>
-              <p>Give <a href="#" onClick={() => {
-                this.props.onGotoHome(1)
-              }}>version 1</a> a try. It has more questions.</p>
+              <p>Give <Link to='/version1'>version 1</Link> a try. It has more questions.</p>
 
               <h2>Questions / Comments?</h2>
               <p> 

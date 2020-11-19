@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
-import HeaderLogo from "../components/HeaderLogo"
-import Blurb from "../components/Blurb"
-import ContinuumStatic from '../components/ContinuumStatic'
+import { HeaderLogo }  from "../components/HeaderLogo"
+import { Blurb } from "../components/Blurb"
+import { ContinuumStatic }  from '../components/ContinuumStatic'
 import { MapboxGLMap } from '../components/MapboxGLMap'
 import { Link } from 'react-router-dom'
 

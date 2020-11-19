@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import Statement from '../components/Statement'
+import { HeaderLogoSkinny } from '../components/HeaderLogoSkinny'
 
 class QuizContainer extends Component {
 
@@ -7,7 +8,7 @@ class QuizContainer extends Component {
     super()
     this.state = {
       questions: [],
-      currentNumber: 22,
+      currentNumber: 23,
       currentText: 'Loading...',
       maxEconomic: 0,
       maxDiplomatic: 0,
@@ -37,6 +38,10 @@ class QuizContainer extends Component {
       diplomatic: parseFloat(d),
       civil: parseFloat(g),
       societal: parseFloat(s)
+    }
+
+    if(this.props.setVersion) {
+      this.props.setVersion(testResult.question_version)
     }
     
     const options = {
@@ -135,10 +140,7 @@ class QuizContainer extends Component {
   render() {
     return (
       <Fragment>
-      <div className='quiz-logo-wrapper'>
-        <img alt='Politipoint' src="https://res.cloudinary.com/fergusdev/image/upload/v1602701055/politipoint/logos/politipoint-wordmark-color_ewmxr1.png" />
-      </div>
-      <hr/>
+      <HeaderLogoSkinny version={ this.props.version } />
       <Statement 
         currentText={ this.state.currentText } 
         currentNumber={ this.state.currentNumber } 

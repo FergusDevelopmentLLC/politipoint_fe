@@ -5,7 +5,7 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import allCounties from "../data/counties_albers.geojson"
 
 export const MapboxGLMap = ({
-  testResults = [],
+  version = [],
   coordinates = [-119.846, 43.862],
   zoom = 6
 }) => {
@@ -122,7 +122,7 @@ export const MapboxGLMap = ({
         }
       })
       setStatefulMap(mapboxGlMap)
-      console.log('mapStateful set in state')
+      //console.log('mapStateful set in state')
     })
   }
 

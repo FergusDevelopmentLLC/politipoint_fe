@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import StateCountySelector from '../components/StateCountySelector'
+import { HeaderLogoSkinny }  from '../components/HeaderLogoSkinny'
 import { Link } from 'react-router-dom'
 
 class ParticipationContainer extends Component {
@@ -52,10 +53,7 @@ class ParticipationContainer extends Component {
     return (
       <Fragment>
         
-        <div className='quiz-logo-wrapper'>
-          <img alt='Politipoint' src="https://res.cloudinary.com/fergusdev/image/upload/v1602701055/politipoint/logos/politipoint-wordmark-color_ewmxr1.png" />
-        </div>
-        <hr/>
+        <HeaderLogoSkinny version={ this.props.version } />
 
         <h2>Many Thanks!</h2>
         <p className="thankyou-instructions">
@@ -121,7 +119,6 @@ class ParticipationContainer extends Component {
               let apiUrl = `${ this.props.urlPrefix }/test_results_check`
               let savedTestResult = await fetch(apiUrl, options).then(r => r.json())
               console.log('savedTestResult', savedTestResult)
-              this.props.setTestResult(savedTestResult)
               this.props.history.push(`/results/${ savedTestResult.economic }/${ savedTestResult.diplomatic }/${ savedTestResult.civil }/${ savedTestResult.societal }`)
             }
             else {

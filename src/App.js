@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Route, Redirect, BrowserRouter  as Router } from "react-router-dom"
+import { Route, BrowserRouter  as Router } from "react-router-dom"
 
 import HomeContainer from "./containers/HomeContainer";
 import QuizContainer from './containers/QuizContainer';
@@ -8,8 +8,8 @@ import ResultsContainer from './containers/ResultsContainer';
 import MapContainer from './containers/MapContainer';
 
 class App extends Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     
     this.state = {
       version: 2,
@@ -27,6 +27,15 @@ class App extends Component {
     })
   }
 
+  setVersion = (version) => {
+    this.setState((previousState) => {
+      return {
+        ...previousState,
+        version: version
+      }
+    })
+  }
+  
   render() {
     
     return (
@@ -38,6 +47,16 @@ class App extends Component {
             version={ this.state.version }
             />)} />
 
+        <Route path="/version1" exact render={(props) => {
+          return <QuizContainer 
+            {...props}
+            version={ 1 } 
+            urlPrefix={ this.state.urlPrefix }
+            setTestResult={ this.setTestResult }
+            setVersion={ this.setVersion }
+          />
+        }} />
+        
         <Route path="/quiz" exact render={(props) => (
           <QuizContainer 
             {...props}
@@ -53,7 +72,6 @@ class App extends Component {
             version={ this.state.version } 
             urlPrefix={ this.state.urlPrefix }
             testResult={ this.state.testResult }
-            setTestResult={ this.setTestResult }
           />
         )} />
 
