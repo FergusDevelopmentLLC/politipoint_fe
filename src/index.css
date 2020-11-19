@@ -408,3 +408,43 @@ a:visited {
   background-color: #ccc;
   text-decoration: none;
 }
+
+dl {
+  display: flex;
+  flex-flow: row wrap;
+  border-bottom: 1px solid #333;
+}
+
+dt {
+  flex-basis: 20%;
+  font-weight: bold;
+  padding: 1rem;
+  text-align: right;
+  border-left: 1px solid #333;
+  border-top: 1px solid #333;
+  border-right: 1px solid #333;
+}
+
+dd {
+  flex-basis: 70%;
+  flex-grow: 1;
+  margin: 0;
+  padding: 1rem;
+  border-top: 1px solid #333;
+  border-right: 1px solid #333;
+}
+
+
+@media screen and (max-width: 800px) {
+  dt {
+    flex-basis: 60%;
+    text-align: left;
+    
+  }
+
+  dd {
+    border-left: 1px solid #333;
+    border-bottom: 1px solid #333;
+    margin-bottom: 1rem;
+  }
+}

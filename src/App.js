@@ -6,6 +6,8 @@ import QuizContainer from './containers/QuizContainer';
 import ParticipationContainer from './containers/ParticipationContainer';
 import ResultsContainer from './containers/ResultsContainer';
 import MapContainer from './containers/MapContainer';
+import { tsIntrinsicKeyword } from '@babel/types';
+import IdeologiesContainer from './containers/IdeologiesContainer';
 
 class App extends Component {
   constructor(props) {
@@ -92,6 +94,10 @@ class App extends Component {
             } } 
             urlPrefix={ this.state.urlPrefix }
           />
+        )} />
+
+        <Route path="/ideologies" exact render={(props) => (
+          <IdeologiesContainer {...props} urlPrefix={ this.state.urlPrefix } />
         )} />
 
       </Router>

@@ -56,15 +56,13 @@ class HomeContainer extends Component {
       `
     } />
 
-    
-    <Blurb headerText={ 'Closest match' } htmlContent={
-      `<p>
-          In addition to the test results, the application will match responses most closely with one of 
-          following <a href='#'>ideologies</a>. This part of the application is experimental and is a work in progress. 
-          Currently, the logic behind ideology matching is the same as what can be found at 
-          <a href='https://github.com/8values/8values.github.io'>8values</a>.
-        </p>`
-    } />
+    <h2>Closest match</h2>
+    <p>
+      In addition to the test results, the application will match responses most closely with one of 
+      following <Link to={'/ideologies'}>ideologies</Link>. This part of the application is experimental 
+      and is a work in progress. Currently, the logic behind ideology matching is the same as what can 
+      be found at <a href='https://github.com/8values/8values.github.io'>8values</a>. 
+    </p>
 
     <Blurb headerText={ 'What data is being collected?' } htmlContent={
       `<ol>
