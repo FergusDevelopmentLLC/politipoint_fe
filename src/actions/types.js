@@ -1,0 +1,5 @@
+export const FETCH_POSTS = 'FETCH_POSTS'
+export const NEW_POST = 'NEW_POST'
+
+export const FETCH_QUESTIONS = 'FETCH_QUESTIONS'
+export const INCREMENT_QUESTION = 'INCREMENT_QUESTION'

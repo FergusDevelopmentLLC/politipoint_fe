@@ -13,8 +13,8 @@ class Statement extends Component {
   }
 
   getStatementText = () => {
-    if(this.props.currentNumber > -1 && this.props.allStatementsCount) {
-      return `Statement ${(this.props.currentNumber + 1).toString()} of ${this.props.allStatementsCount.toString()}`
+    if(this.props.currentIndex > -1 && this.props.allStatementsCount) {
+      return `Statement ${(this.props.currentIndex + 1).toString()} of ${this.props.allStatementsCount.toString()}`
     }
     return ''
   }

@@ -2,13 +2,18 @@ import React, { Component, Fragment } from 'react'
 import Statement from '../components/Statement'
 import { HeaderLogoSkinny } from '../components/HeaderLogoSkinny'
 
+import { connect } from 'react-redux'
+import { fetchQuestions } from '../actions/quizActions'
+import PropTypes from 'prop-types'
+
 class QuizContainer extends Component {
 
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
-      questions: [],
-      currentNumber: 23,
+      questions: this.props.questions,
+      version: 2,
+      currentIndex: 0,
       currentText: 'Loading...',
       maxEconomic: 0,
       maxDiplomatic: 0,
@@ -33,7 +38,7 @@ class QuizContainer extends Component {
     let s = this.calculateScore(this.state.userSocietalScore, this.state.maxSocietal)
 
     let testResult = {
-      question_version: this.props.version,
+      question_version: this.state.version,
       economic: parseFloat(e),
       diplomatic: parseFloat(d),
       civil: parseFloat(g),
@@ -59,51 +64,45 @@ class QuizContainer extends Component {
               })
   }
 
-  async componentDidMount() {
+  componentDidMount() {
+    this.props.fetchQuestions(this.props.urlPrefix, this.state.version)
+  }
 
-    let url = `${this.props.urlPrefix}/questions/by_version/${this.props.version}`
-    
-    let questions = await fetch(url).then(r => r.json())
-
-    this.setState((previousState) => {
+  static getDerivedStateFromProps(props, state) {
+    if(props.questions.length > 0) {
+      const questions = props.questions
       return {
-        ...previousState,
         questions: questions,
-        currentText: questions[previousState.currentNumber].question,
-        questionIterationId: questions[previousState.currentNumber].question_iteration_id
+        currentText: questions[state.currentIndex].question,
+        questionIterationId: questions[state.currentIndex].question_iteration_id,
+        maxEconomic: questions.reduce((acc, question) => acc + Math.abs(question.effect.econ), 0),
+        maxDiplomatic: questions.reduce((acc, question) => acc + Math.abs(question.effect.dipl), 0),
+        maxCivil: questions.reduce((acc, question) => acc + Math.abs(question.effect.govt), 0),
+        maxSocietal: questions.reduce((acc, question) => acc + Math.abs(question.effect.scty), 0)
       }
-    }, () => {
-      this.setState((previousState) => {
-        return {
-          ...previousState,
-          maxEconomic: questions.reduce((acc, question) => acc + Math.abs(question.effect.econ), 0),
-          maxDiplomatic: questions.reduce((acc, question) => acc + Math.abs(question.effect.dipl), 0),
-          maxCivil: questions.reduce((acc, question) => acc + Math.abs(question.effect.govt), 0),
-          maxSocietal: questions.reduce((acc, question) => acc + Math.abs(question.effect.scty), 0)
-        }
-      })
-    })
-    
+    }
+    else {
+      return null
+    }
   }
 
   onResponse = async (multiplier) => {
     this.setState((prevState) => {
       return {
         ...prevState,
-        userEconomicScore:   prevState.userEconomicScore   += multiplier * prevState.questions[prevState.currentNumber].effect.econ,
-        userDiplomaticScore: prevState.userDiplomaticScore += multiplier * prevState.questions[prevState.currentNumber].effect.dipl,
-        userCivilScore:      prevState.userCivilScore      += multiplier * prevState.questions[prevState.currentNumber].effect.govt,
-        userSocietalScore:   prevState.userSocietalScore   += multiplier * prevState.questions[prevState.currentNumber].effect.scty
+        userEconomicScore:   prevState.userEconomicScore   += multiplier * prevState.questions[prevState.currentIndex].effect.econ,
+        userDiplomaticScore: prevState.userDiplomaticScore += multiplier * prevState.questions[prevState.currentIndex].effect.dipl,
+        userCivilScore:      prevState.userCivilScore      += multiplier * prevState.questions[prevState.currentIndex].effect.govt,
+        userSocietalScore:   prevState.userSocietalScore   += multiplier * prevState.questions[prevState.currentIndex].effect.scty
       }
     }, async () => {
       //go to the next statement if not at end.
-      if (this.state.currentNumber < this.state.questions.length - 1) {
+      if (this.state.currentIndex < this.state.questions.length - 1) {
         this.setState((prevState) => {
-          const nextNumber = prevState.currentNumber + 1
           return {
             ...prevState,
-            currentNumber: nextNumber,
-            currentText: prevState.questions[nextNumber].question
+            currentIndex: prevState.currentIndex + 1,
+            currentText: prevState.questions[prevState.currentIndex + 1].question
           }
         })
 
@@ -120,7 +119,7 @@ class QuizContainer extends Component {
 
   onFeedbackGiven = async (feedback) => {
 
-    feedback.question_iteration_id = this.state.questions[this.state.currentNumber].question_iteration_id
+    feedback.question_iteration_id = this.state.questions[this.state.currentIndex].question_iteration_id
 
     const options = {
       method: 'POST',
@@ -140,10 +139,10 @@ class QuizContainer extends Component {
   render() {
     return (
       <Fragment>
-      <HeaderLogoSkinny version={ this.props.version } />
+      <HeaderLogoSkinny version={ this.state.version } />
       <Statement 
         currentText={ this.state.currentText } 
-        currentNumber={ this.state.currentNumber } 
+        currentIndex={ this.state.currentIndex } 
         allStatementsCount={ this.state.questions.length }
         onResponse={ this.onResponse }
         onFeedbackGiven={ this.onFeedbackGiven }
@@ -153,4 +152,15 @@ class QuizContainer extends Component {
   }
 }
 
-export default QuizContainer
+QuizContainer.propTypes = {
+  fetchQuestions: PropTypes.func.isRequired,
+  questions: PropTypes.array.isRequired,
+}
+
+const mapStateToProps = (state) => {
+  return {
+    questions: state.quizReducer.questions
+  }
+}
+
+export default connect(mapStateToProps, { fetchQuestions })(QuizContainer)
