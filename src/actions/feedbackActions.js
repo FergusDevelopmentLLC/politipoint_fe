@@ -9,9 +9,7 @@ export const createFeedback = (question_feedback) => dispatch => {
     body: JSON.stringify( { question_feedback: question_feedback } )
   }
 
-  let apiUrl = `${ URL_PREFIX }/question_feedbacks`
-
-  fetch(`${ apiUrl } `, options)
+  fetch(`${ `${ URL_PREFIX }/question_feedbacks` } `, options)
     .then(res => res.json())
     .then((feedback) => {
       console.log('feedback saved:', feedback)

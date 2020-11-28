@@ -7,7 +7,6 @@ import { Link } from 'react-router-dom'
 
 class HomeContainer extends Component {
   
-  // {/* TODO: how to handle ideologies link? */}
   render() {
     
     return (
@@ -94,7 +93,6 @@ class HomeContainer extends Component {
     <div className="button-wrapper">
       <Link className='button' to='/quiz'>Click/tap here to begin</Link>
     </div>
-
 
     </Fragment>
     )

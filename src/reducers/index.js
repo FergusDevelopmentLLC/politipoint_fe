@@ -1,12 +1,13 @@
 import { combineReducers } from 'redux'
-import postReducer from './postReducer'
+
 import quizReducer from './quizReducer'
 import testResultReducer from './testResultReducer'
 import feedbackReducer from './feedbackReducer'
+import ideologyReducer from './ideologyReducer'
 
 export default combineReducers({
-  posts: postReducer,
-  quizReducer: quizReducer,
-  testResultReducer: testResultReducer,
-  feedbackReducer: feedbackReducer
+  quizReducer,
+  testResultReducer,
+  feedbackReducer,
+  ideologyReducer
 })

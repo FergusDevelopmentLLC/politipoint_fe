@@ -17,7 +17,7 @@ class QuizContainer extends Component {
     this.state = {
       questions: this.props.questions,
       version: this.props.version,
-      currentIndex: 20,
+      currentIndex: 0,
       currentText: 'Loading...',
       testResult: {
         question_version: this.props.version,
