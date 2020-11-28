@@ -1,6 +1,7 @@
 import { NEW_TEST_RESULT, UPDATE_TEST_RESULT } from './types'
+import { URL_PREFIX } from './urlPrefix'
 
-export const createTestResult = (urlPrefix, testResult, history) => dispatch => {
+export const createTestResult = (testResult, history) => dispatch => {
   console.log('createTestResult')
   
   const options = {
@@ -9,7 +10,7 @@ export const createTestResult = (urlPrefix, testResult, history) => dispatch => 
     body: JSON.stringify( { test_result: testResult } )
   }
 
-  fetch(`${urlPrefix}/test_results`, options)
+  fetch(`${ URL_PREFIX }/test_results`, options)
     .then(res => res.json())
     .then((testResult) => {
       dispatch({
@@ -21,7 +22,7 @@ export const createTestResult = (urlPrefix, testResult, history) => dispatch => 
   
 }
 
-export const updateTestResult = (urlPrefix, testResult, history) => dispatch => {
+export const updateTestResult = (testResult, history) => dispatch => {
   console.log('updateTestResult')
   
   const options = {
@@ -30,7 +31,8 @@ export const updateTestResult = (urlPrefix, testResult, history) => dispatch => 
     body: JSON.stringify( { test_result: testResult } )
   }
 
-  let apiUrl = `${ urlPrefix }/test_results_check`
+  let apiUrl = `${ URL_PREFIX }/test_results_check`
+  
   fetch(`${apiUrl}`, options)
     .then(res => res.json())
     .then((savedTestResult) => {

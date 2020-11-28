@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { HeaderLogo } from '../components/HeaderLogo'
 import { Continuum } from '../components/Continuum'
 import { MapboxGLMap } from '../components/MapboxGLMap'
+import { URL_PREFIX } from '../actions/urlPrefix'
 
 class ResultsContainer extends Component {
   constructor(props) {
@@ -21,7 +22,7 @@ class ResultsContainer extends Component {
 
   async componentDidMount() {
     
-    let url = `${ this.props.urlPrefix }/test_result_ideology/${ this.props.testResult.economic }/${ this.props.testResult.diplomatic }/${ this.props.testResult.civil }/${ this.props.testResult.societal }`
+    let url = `${ URL_PREFIX }/test_result_ideology/${ this.props.testResult.economic }/${ this.props.testResult.diplomatic }/${ this.props.testResult.civil }/${ this.props.testResult.societal }`
     let ideologyMatches = await fetch(url).then(r => r.json())
     
     this.setState((previousState) => {

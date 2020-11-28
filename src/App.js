@@ -15,7 +15,6 @@ class App extends Component {
     super(props)
     
     this.state = {
-      urlPrefix: 'http://127.0.0.1:3000',
       testResult: null
     }
   }
@@ -29,15 +28,6 @@ class App extends Component {
     })
   }
 
-  setVersion = (version) => {
-    this.setState((previousState) => {
-      return {
-        ...previousState,
-        version: version
-      }
-    })
-  }
-  
   render() {
     
     return (
@@ -54,9 +44,7 @@ class App extends Component {
             return <QuizContainer 
               {...props}
               version={ 1 } 
-              urlPrefix={ this.state.urlPrefix }
               setTestResult={ this.setTestResult }
-              setVersion={ this.setVersion }
             />
           }} />
           
@@ -64,7 +52,6 @@ class App extends Component {
             <QuizContainer 
               {...props}
               version = { 2 }
-              urlPrefix={ this.state.urlPrefix }
               setTestResult={ this.setTestResult }
             />
           )} />
@@ -73,7 +60,6 @@ class App extends Component {
             <ParticipationContainer 
               {...props}
               version={ this.state.version } 
-              urlPrefix={ this.state.urlPrefix }
               testResult={ this.state.testResult }
             />
           )} />
@@ -93,12 +79,11 @@ class App extends Component {
                 civil: parseFloat(props.match.params.civil),
                 societal: parseFloat(props.match.params.societal)
               } } 
-              urlPrefix={ this.state.urlPrefix }
             />
           )} />
 
           <Route path="/ideologies" exact render={(props) => (
-            <IdeologiesContainer {...props} urlPrefix={ this.state.urlPrefix } />
+            <IdeologiesContainer {...props} />
           )} />
         </Router>
       </Provider>

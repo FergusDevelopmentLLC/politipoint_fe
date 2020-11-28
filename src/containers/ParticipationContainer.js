@@ -16,10 +16,10 @@ class ParticipationContainer extends Component {
   }
 
   getLocationText = () => {
-    if( this.props.testResult && this.props.testResult.county ) {
+    if( this.state.testResult && this.state.testResult.county ) {
 
       let htmlContent = `Based on your IP address, your local county has been approximated to be: 
-                         <strong>${ this.props.testResult.county.name }, ${this.props.testResult.county.state_abbrev}</strong>. If wish to affiliate 
+                         <strong>${ this.state.testResult.county.name }, ${this.state.testResult.county.state_abbrev}</strong>. If wish to affiliate 
                          with a different U.S. county, please select it below:`
 
       return <span dangerouslySetInnerHTML={{ __html: htmlContent }}></span>
@@ -115,7 +115,7 @@ class ParticipationContainer extends Component {
                 }
               }
               
-              this.props.updateTestResult(this.props.urlPrefix, testResultForSaving, this.props.history)
+              this.props.updateTestResult(testResultForSaving, this.props.history)
               
             }
             else {

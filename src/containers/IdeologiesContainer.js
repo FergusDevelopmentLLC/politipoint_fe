@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import { HeaderLogo }  from "../components/HeaderLogo"
+import { URL_PREFIX } from '../actions/urlPrefix'
 
 class IdeologiesContainer extends Component {
   constructor() {
@@ -10,7 +11,7 @@ class IdeologiesContainer extends Component {
   }
 
   async componentDidMount () {
-    const ideologies = await fetch(`${ this.props.urlPrefix }/ideologies`).then(r => r.json())
+    const ideologies = await fetch(`${ URL_PREFIX }/ideologies`).then(r => r.json())
     this.setState((previousState) => {
       return {
         ...previousState,

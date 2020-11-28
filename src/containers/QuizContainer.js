@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import { fetchQuestions } from '../actions/quizActions'
 import { createTestResult } from '../actions/testResultActions'
 import PropTypes from 'prop-types'
+import { URL_PREFIX } from '../actions/urlPrefix'
 
 class QuizContainer extends Component {
 
@@ -27,7 +28,7 @@ class QuizContainer extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchQuestions(this.props.urlPrefix, this.state.version)
+    this.props.fetchQuestions(this.state.version)
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -46,18 +47,14 @@ class QuizContainer extends Component {
     return (100 * (max + score) / (2 * max)).toFixed(1)
   }
 
-  saveTestResult = async () => {
-
-    if(this.props.setVersion) {
-      this.props.setVersion(this.state.version)
-    }
+  saveTestResult = () => {
 
     const questions = this.state.questions
 
-    const maxEconomic = questions.reduce((acc, question)   => acc + Math.abs(question.effect.econ), 0)
+    const maxEconomic   = questions.reduce((acc, question) => acc + Math.abs(question.effect.econ), 0)
     const maxDiplomatic = questions.reduce((acc, question) => acc + Math.abs(question.effect.dipl), 0)
-    const maxCivil = questions.reduce((acc, question)      => acc + Math.abs(question.effect.govt), 0)
-    const maxSocietal = questions.reduce((acc, question)   => acc + Math.abs(question.effect.scty), 0)
+    const maxCivil      = questions.reduce((acc, question) => acc + Math.abs(question.effect.govt), 0)
+    const maxSocietal   = questions.reduce((acc, question) => acc + Math.abs(question.effect.scty), 0)
 
     let testResult = {
       question_version: this.state.version,
@@ -69,41 +66,43 @@ class QuizContainer extends Component {
 
     console.log('testResult', testResult)
 
-    this.props.createTestResult(this.props.urlPrefix, testResult, this.props.history)
+    this.props.createTestResult(testResult, this.props.history)
     
   }
   
   onResponse = async (multiplier) => {
-    if (this.state.currentIndex < this.state.questions.length) {
-      //update the testResult in state based on the response
-      this.setState((previousState) => {
-        return {
-          ...previousState,
-          testResult: {
-            ...previousState.testResult,
-            economic: previousState.testResult.economic       += multiplier * previousState.questions[previousState.currentIndex].effect.econ,
-            diplomatic: previousState.testResult.diplomatic   += multiplier * previousState.questions[previousState.currentIndex].effect.dipl,
-            civil: previousState.testResult.civil             += multiplier * previousState.questions[previousState.currentIndex].effect.govt,
-            societal: previousState.testResult.societal       += multiplier * previousState.questions[previousState.currentIndex].effect.scty
-          }
+
+    this.setState((previousState) => {
+      
+      // save updated testResult in state
+      return {
+        ...previousState,
+        testResult: {
+          ...previousState.testResult,
+          economic: previousState.testResult.economic       += multiplier * previousState.questions[previousState.currentIndex].effect.econ,
+          diplomatic: previousState.testResult.diplomatic   += multiplier * previousState.questions[previousState.currentIndex].effect.dipl,
+          civil: previousState.testResult.civil             += multiplier * previousState.questions[previousState.currentIndex].effect.govt,
+          societal: previousState.testResult.societal       += multiplier * previousState.questions[previousState.currentIndex].effect.scty
         }
-      },() => {
-        //after saving the updated testResult, increment the question.
+      }
+    }, () => {
+      // after saving test result to state, if this is not the last question, increment it
+      if (this.state.currentIndex < this.state.questions.length - 1) {
         this.setState((previousState) => {
           const nextIndex = previousState.currentIndex + 1
           return {
             ...previousState,
             currentIndex: nextIndex,
-            currentText: previousState.questions[nextIndex] ? previousState.questions[nextIndex].question : '',
-          }
-        }, async () => {
-          //if we have gone past the questions length, save the test result to the db
-          if(this.state.currentIndex === this.state.questions.length) {
-            await this.saveTestResult()
+            currentText: previousState.questions[nextIndex].question
           }
         })
-      })
-    }
+      }
+      else {
+        console.log('save result?')
+        this.saveTestResult()
+      }
+    })
+
   }
 
   onFeedbackGiven = async (feedback) => {
@@ -116,7 +115,7 @@ class QuizContainer extends Component {
       body: JSON.stringify( { question_feedback: feedback } )
     }
 
-    let apiUrl = `${this.props.urlPrefix}/question_feedbacks`
+    let apiUrl = `${ URL_PREFIX }/question_feedbacks`
 
     await fetch(apiUrl, options)
             .then(res => res.json())
