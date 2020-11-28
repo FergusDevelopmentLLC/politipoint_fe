@@ -15,17 +15,8 @@ class App extends Component {
     super(props)
     
     this.state = {
-      testResult: null
+      version: 2
     }
-  }
-
-  setTestResult = (testResult) => {
-    this.setState((previousState) => {
-      return {
-        ...previousState,
-        testResult: testResult
-      }
-    })
   }
 
   render() {
@@ -44,15 +35,13 @@ class App extends Component {
             return <QuizContainer 
               {...props}
               version={ 1 } 
-              setTestResult={ this.setTestResult }
             />
           }} />
           
           <Route path="/quiz" exact render={(props) => (
             <QuizContainer 
               {...props}
-              version = { 2 }
-              setTestResult={ this.setTestResult }
+              version = { this.state.version }
             />
           )} />
 
@@ -60,7 +49,6 @@ class App extends Component {
             <ParticipationContainer 
               {...props}
               version={ this.state.version } 
-              testResult={ this.state.testResult }
             />
           )} />
 

@@ -19,7 +19,7 @@ class ParticipationContainer extends Component {
     if( this.state.testResult && this.state.testResult.county ) {
 
       let htmlContent = `Based on your IP address, your local county has been approximated to be: 
-                         <strong>${ this.state.testResult.county.name }, ${this.state.testResult.county.state_abbrev}</strong>. If wish to affiliate 
+                         <strong>${ this.props.testResult.county.name }, ${this.props.testResult.county.state_abbrev}</strong>. If wish to affiliate 
                          with a different U.S. county, please select it below:`
 
       return <span dangerouslySetInnerHTML={{ __html: htmlContent }}></span>
@@ -69,7 +69,9 @@ class ParticipationContainer extends Component {
         <p className="thankyou-instructions">{ this.getLocationText() }</p>
 
         <StateCountySelector 
-        selectedCountyGeoId={ this.state.testResult && this.state.testResult.county ? this.state.testResult.county.geoid : 0 } onCountyChange={ this.setTestResultCounty } />
+          selectedCountyGeoId={ this.state.testResult && this.state.testResult.county ? this.state.testResult.county.geoid : 0 } 
+          onCountyChange={ this.setTestResultCounty }
+          />
         
         <h2>Share your results?</h2>
         <p className="thankyou-instructions">
