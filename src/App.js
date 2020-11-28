@@ -63,6 +63,7 @@ class App extends Component {
           <Route path="/quiz" exact render={(props) => (
             <QuizContainer 
               {...props}
+              version = { 2 }
               urlPrefix={ this.state.urlPrefix }
               setTestResult={ this.setTestResult }
             />

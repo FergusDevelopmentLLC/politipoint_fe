@@ -12,17 +12,15 @@ class QuizContainer extends Component {
     super(props)
     this.state = {
       questions: this.props.questions,
-      version: 2,
-      currentIndex: 0,
+      version: this.props.version,
+      currentIndex: 20,
       currentText: 'Loading...',
-      maxEconomic: 0,
-      maxDiplomatic: 0,
-      maxCivil: 0,
-      maxSocietal: 0,
-      userEconomicScore: 0,
-      userDiplomaticScore: 0,
-      userCivilScore: 0,
-      userSocietalScore: 0
+      testResult: {
+        economic: 0,
+        diplomatic: 0,
+        civil: 0,
+        societal: 0
+      }
     }
   }
 
@@ -30,19 +28,26 @@ class QuizContainer extends Component {
     return (100 * (max + score) / (2 * max)).toFixed(1)
   }
 
-  saveResult = async () => {
+  saveTestResult = async () => {
 
-    let e = this.calculateScore(this.state.userEconomicScore, this.state.maxEconomic) 
-    let d = this.calculateScore(this.state.userDiplomaticScore, this.state.maxDiplomatic)
-    let g = this.calculateScore(this.state.userCivilScore, this.state.maxCivil) 
-    let s = this.calculateScore(this.state.userSocietalScore, this.state.maxSocietal)
+    const questions = this.state.questions
+
+    const maxEconomic = questions.reduce((acc, question)   => acc + Math.abs(question.effect.econ), 0)
+    const maxDiplomatic = questions.reduce((acc, question) => acc + Math.abs(question.effect.dipl), 0)
+    const maxCivil = questions.reduce((acc, question)      => acc + Math.abs(question.effect.govt), 0)
+    const maxSocietal = questions.reduce((acc, question)   => acc + Math.abs(question.effect.scty), 0)
+
+    const e = parseFloat(this.calculateScore(this.state.testResult.economic, maxEconomic)) 
+    const d = parseFloat(this.calculateScore(this.state.testResult.diplomatic, maxDiplomatic))
+    const g = parseFloat(this.calculateScore(this.state.testResult.civil, maxCivil)) 
+    const s = parseFloat(this.calculateScore(this.state.testResult.societal, maxSocietal))
 
     let testResult = {
       question_version: this.state.version,
-      economic: parseFloat(e),
-      diplomatic: parseFloat(d),
-      civil: parseFloat(g),
-      societal: parseFloat(s)
+      economic: e,
+      diplomatic: d,
+      civil: g,
+      societal: s
     }
 
     if(this.props.setVersion) {
@@ -69,16 +74,10 @@ class QuizContainer extends Component {
   }
 
   static getDerivedStateFromProps(props, state) {
-    if(props.questions.length > 0) {
-      const questions = props.questions
+    if(props.questions.length > 0 && state.questions.length === 0) {
       return {
-        questions: questions,
-        currentText: questions[state.currentIndex].question,
-        questionIterationId: questions[state.currentIndex].question_iteration_id,
-        maxEconomic: questions.reduce((acc, question) => acc + Math.abs(question.effect.econ), 0),
-        maxDiplomatic: questions.reduce((acc, question) => acc + Math.abs(question.effect.dipl), 0),
-        maxCivil: questions.reduce((acc, question) => acc + Math.abs(question.effect.govt), 0),
-        maxSocietal: questions.reduce((acc, question) => acc + Math.abs(question.effect.scty), 0)
+        questions: props.questions,
+        currentText: props.questions[state.currentIndex].question
       }
     }
     else {
@@ -87,34 +86,36 @@ class QuizContainer extends Component {
   }
 
   onResponse = async (multiplier) => {
-    this.setState((prevState) => {
-      return {
-        ...prevState,
-        userEconomicScore:   prevState.userEconomicScore   += multiplier * prevState.questions[prevState.currentIndex].effect.econ,
-        userDiplomaticScore: prevState.userDiplomaticScore += multiplier * prevState.questions[prevState.currentIndex].effect.dipl,
-        userCivilScore:      prevState.userCivilScore      += multiplier * prevState.questions[prevState.currentIndex].effect.govt,
-        userSocietalScore:   prevState.userSocietalScore   += multiplier * prevState.questions[prevState.currentIndex].effect.scty
-      }
-    }, async () => {
-      //go to the next statement if not at end.
-      if (this.state.currentIndex < this.state.questions.length - 1) {
-        this.setState((prevState) => {
+    if (this.state.currentIndex < this.state.questions.length) {
+      //update the testResult in state based on the response
+      this.setState((previousState) => {
+        return {
+          ...previousState,
+          testResult: {
+            ...previousState.testResult,
+            economic: previousState.testResult.economic       += multiplier * previousState.questions[previousState.currentIndex].effect.econ,
+            diplomatic: previousState.testResult.diplomatic   += multiplier * previousState.questions[previousState.currentIndex].effect.dipl,
+            civil: previousState.testResult.civil             += multiplier * previousState.questions[previousState.currentIndex].effect.govt,
+            societal: previousState.testResult.societal       += multiplier * previousState.questions[previousState.currentIndex].effect.scty
+          }
+        }
+      },() => {
+        //after saving the updated testResult, increment the question.
+        this.setState((previousState) => {
+          const nextIndex = previousState.currentIndex + 1
           return {
-            ...prevState,
-            currentIndex: prevState.currentIndex + 1,
-            currentText: prevState.questions[prevState.currentIndex + 1].question
+            ...previousState,
+            currentIndex: nextIndex,
+            currentText: previousState.questions[nextIndex] ? previousState.questions[nextIndex].question : '',
+          }
+        }, async () => {
+          //if we have gone past the questions length, save the test result to the db
+          if(this.state.currentIndex === this.state.questions.length) {
+            await this.saveTestResult()
           }
         })
-
-        document.querySelector('.quiz-logo-wrapper').scrollIntoView({ 
-          behavior: 'smooth' 
-        })
-        
-      }
-      else {
-        await this.saveResult()
-      }
-    })
+      })
+    }
   }
 
   onFeedbackGiven = async (feedback) => {
