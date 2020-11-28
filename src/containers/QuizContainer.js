@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import Statement from '../components/Statement'
-import { HeaderLogoSkinny } from '../components/HeaderLogoSkinny'
+import { HeaderLogo } from '../components/HeaderLogo'
 
 import { connect } from 'react-redux'
 
@@ -111,8 +111,9 @@ class QuizContainer extends Component {
 
   render() {
     return (
-      <Fragment>
-      <HeaderLogoSkinny version={ this.state.version } />
+      <>
+      <HeaderLogo version={ this.state.version } />
+      <hr/>
       <Statement 
         currentText={ this.state.currentText } 
         currentIndex={ this.state.currentIndex } 
@@ -120,7 +121,7 @@ class QuizContainer extends Component {
         onResponse={ this.onResponse }
         onFeedbackGiven={ this.onFeedbackGiven }
         />
-      </Fragment>
+      </>
     )
   }
 }

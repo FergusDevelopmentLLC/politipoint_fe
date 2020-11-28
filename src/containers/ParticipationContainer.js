@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import StateCountySelector from '../components/StateCountySelector'
-import { HeaderLogoSkinny }  from '../components/HeaderLogoSkinny'
+import { HeaderLogo } from '../components/HeaderLogo'
 import { Link } from 'react-router-dom'
 
 import PropTypes from 'prop-types'
@@ -57,7 +57,7 @@ class ParticipationContainer extends Component {
     return (
       <Fragment>
         
-        <HeaderLogoSkinny version={ this.props.version } />
+        <HeaderLogo version={ this.props.version } isSkinny={true} />
 
         <h2>Many Thanks!</h2>
         <p className="thankyou-instructions">
