@@ -3,6 +3,10 @@ import StateCountySelector from '../components/StateCountySelector'
 import { HeaderLogoSkinny }  from '../components/HeaderLogoSkinny'
 import { Link } from 'react-router-dom'
 
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { updateTestResult } from '../actions/testResultActions'
+
 class ParticipationContainer extends Component {
   constructor(props) {
     super(props)
@@ -47,7 +51,7 @@ class ParticipationContainer extends Component {
 
     })
   }
-  
+
   render() {
 
     return (
@@ -64,7 +68,8 @@ class ParticipationContainer extends Component {
         <h2>Location</h2>
         <p className="thankyou-instructions">{ this.getLocationText() }</p>
 
-        <StateCountySelector selectedCountyGeoId={ this.state.testResult && this.state.testResult.county ? this.state.testResult.county.geoid : 0 } onCountyChange={ this.setTestResultCounty } />
+        <StateCountySelector 
+        selectedCountyGeoId={ this.state.testResult && this.state.testResult.county ? this.state.testResult.county.geoid : 0 } onCountyChange={ this.setTestResultCounty } />
         
         <h2>Share your results?</h2>
         <p className="thankyou-instructions">
@@ -110,16 +115,8 @@ class ParticipationContainer extends Component {
                 }
               }
               
-              const options = {
-                method: 'PATCH',
-                headers: new Headers({'content-type': 'application/json'}),
-                body: JSON.stringify( { test_result: testResultForSaving } )
-              }
-
-              let apiUrl = `${ this.props.urlPrefix }/test_results_check`
-              let savedTestResult = await fetch(apiUrl, options).then(r => r.json())
-              console.log('savedTestResult', savedTestResult)
-              this.props.history.push(`/results/${ savedTestResult.economic }/${ savedTestResult.diplomatic }/${ savedTestResult.civil }/${ savedTestResult.societal }`)
+              this.props.updateTestResult(this.props.urlPrefix, testResultForSaving, this.props.history)
+              
             }
             else {
               alert("Please select a county or opt out of sharing your test results.")
@@ -133,4 +130,15 @@ class ParticipationContainer extends Component {
   }
 }
 
-export default ParticipationContainer
+ParticipationContainer.propTypes = {
+  testResult: PropTypes.object.isRequired,
+  updateTestResult: PropTypes.func.isRequired
+}
+
+const mapStateToProps = (state) => {
+  return {
+    testResult: state.testResultReducer.testResult
+  }
+}
+
+export default connect(mapStateToProps, { updateTestResult })(ParticipationContainer)
