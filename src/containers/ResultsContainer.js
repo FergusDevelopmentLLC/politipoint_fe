@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { HeaderLogo } from '../components/HeaderLogo'
 import { Continuum } from '../components/Continuum'
-import { MapboxGLMap } from '../components/MapboxGLMap'
+import { Map } from '../components/Map'
 import { URL_PREFIX } from '../actions/urlPrefix'
 
 class ResultsContainer extends Component {
@@ -62,7 +62,7 @@ class ResultsContainer extends Component {
                 button to see how the number of tests from each county compares. Counties with taller heights have had more test results.
               </p>
               <div id="results-map">
-                <MapboxGLMap />
+                <Map />
               </div>
 
               <h2>Don't agree your results?</h2>

@@ -112,7 +112,7 @@ class QuizContainer extends Component {
   render() {
     return (
       <>
-      <HeaderLogo version={ this.state.version } />
+      <HeaderLogo version={ this.state.version } isSkinny={ true } />
       <hr/>
       <Statement 
         currentText={ this.state.currentText } 

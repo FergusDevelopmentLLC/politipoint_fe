@@ -1,17 +1,16 @@
-import React, { Component, Fragment } from 'react'
+import React from 'react'
 import { HeaderLogo }  from "../components/HeaderLogo"
 import { Blurb } from "../components/Blurb"
 import { ContinuumStatic }  from '../components/ContinuumStatic'
-import { MapboxGLMap } from '../components/MapboxGLMap'
+import { Map } from '../components/Map'
 import { Link } from 'react-router-dom'
 
-class HomeContainer extends Component {
-  
-  render() {
-    
-    return (
-    <Fragment>
-    <HeaderLogo version={ this.props.version } />
+const HomeContainer = ({
+  version
+}) => {
+  return (
+    <>
+    <HeaderLogo version={ version } isSkinny={ false } />
     
     <div className="button-wrapper">
       <Link className='button' to='/quiz'>Click/tap here to begin</Link>
@@ -36,7 +35,7 @@ class HomeContainer extends Component {
       to see information about test result counts per county. 
     </p>
     <div className="map-wrapper">
-      <MapboxGLMap />
+      <Map />
     </div>
     <p>
       The map above is randomly generated for illustration purposes and do not reflect actual tests results. For actual 
@@ -94,8 +93,8 @@ class HomeContainer extends Component {
       <Link className='button' to='/quiz'>Click/tap here to begin</Link>
     </div>
 
-    </Fragment>
-    )
-  }
+    </>
+  )
 }
+
 export default HomeContainer

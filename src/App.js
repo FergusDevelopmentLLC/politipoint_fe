@@ -7,7 +7,7 @@ import HomeContainer from "./containers/HomeContainer"
 import QuizContainer from './containers/QuizContainer'
 import ParticipationContainer from './containers/ParticipationContainer'
 import ResultsContainer from './containers/ResultsContainer'
-import MapContainer from './containers/MapContainer'
+import { Map } from './components/Map'
 import IdeologiesContainer from './containers/IdeologiesContainer'
 
 class App extends Component {
@@ -53,7 +53,7 @@ class App extends Component {
           )} />
 
           <Route path="/map" exact render={(props) => (
-            <MapContainer
+            <Map
               {...props}
             />
           )} />
