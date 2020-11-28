@@ -42,14 +42,10 @@ export const updateTestResult = (urlPrefix, testResult, history) => dispatch => 
     })
 
   // let savedTestResult = await fetch(apiUrl, options).then(r => r.json())
-  // console.log('savedTestResult', savedTestResult)
   // dispatch({
   //   type: UPDATE_TEST_RESULT,
   //   payload: savedTestResult
   // })
-  
-  //history.push(`/results/${ savedTestResult.economic }/${ savedTestResult.diplomatic }/${ savedTestResult.civil }/${ savedTestResult.societal }`)
-
-  
+  // history.push(`/results/${ savedTestResult.economic }/${ savedTestResult.diplomatic }/${ savedTestResult.civil }/${ savedTestResult.societal }`)
   
 }
