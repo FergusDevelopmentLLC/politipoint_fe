@@ -64,13 +64,11 @@ class QuizContainer extends Component {
       societal:   parseFloat(this.calculateScore(this.state.testResult.societal, maxSocietal))
     }
 
-    console.log('testResult', testResult)
-
     this.props.createTestResult(testResult, this.props.history)
-    
+
   }
   
-  onResponse = async (multiplier) => {
+  onResponse = (multiplier) => {
 
     this.setState((previousState) => {
       
@@ -87,6 +85,7 @@ class QuizContainer extends Component {
       }
     }, () => {
       // after saving test result to state, if this is not the last question, increment it
+      // else save to api
       if (this.state.currentIndex < this.state.questions.length - 1) {
         this.setState((previousState) => {
           const nextIndex = previousState.currentIndex + 1
@@ -98,7 +97,6 @@ class QuizContainer extends Component {
         })
       }
       else {
-        console.log('save result?')
         this.saveTestResult()
       }
     })

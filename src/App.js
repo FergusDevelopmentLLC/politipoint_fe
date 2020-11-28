@@ -71,7 +71,8 @@ class App extends Component {
           )} />
 
           <Route path="/ideologies" exact render={(props) => (
-            <IdeologiesContainer {...props} />
+            <IdeologiesContainer 
+              {...props} />
           )} />
         </Router>
       </Provider>
