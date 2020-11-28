@@ -3,10 +3,12 @@ import Statement from '../components/Statement'
 import { HeaderLogoSkinny } from '../components/HeaderLogoSkinny'
 
 import { connect } from 'react-redux'
+
 import { fetchQuestions } from '../actions/quizActions'
 import { createTestResult } from '../actions/testResultActions'
+import { createFeedback } from '../actions/feedbackActions'
+
 import PropTypes from 'prop-types'
-import { URL_PREFIX } from '../actions/urlPrefix'
 
 class QuizContainer extends Component {
 
@@ -56,7 +58,7 @@ class QuizContainer extends Component {
     const maxCivil      = questions.reduce((acc, question) => acc + Math.abs(question.effect.govt), 0)
     const maxSocietal   = questions.reduce((acc, question) => acc + Math.abs(question.effect.scty), 0)
 
-    let testResult = {
+    const testResult = {
       question_version: this.state.version,
       economic:   parseFloat(this.calculateScore(this.state.testResult.economic, maxEconomic)),
       diplomatic: parseFloat(this.calculateScore(this.state.testResult.diplomatic, maxDiplomatic)),
@@ -84,8 +86,7 @@ class QuizContainer extends Component {
         }
       }
     }, () => {
-      // after saving test result to state, if this is not the last question, increment it
-      // else save to api
+      // after saving testResult to state, if this is not the last question, increment it
       if (this.state.currentIndex < this.state.questions.length - 1) {
         this.setState((previousState) => {
           const nextIndex = previousState.currentIndex + 1
@@ -96,30 +97,16 @@ class QuizContainer extends Component {
           }
         })
       }
-      else {
+      else {//if this is the last question, save testResult to api
         this.saveTestResult()
       }
     })
 
   }
 
-  onFeedbackGiven = async (feedback) => {
-
+  onFeedbackGiven = (feedback) => {
     feedback.question_iteration_id = this.state.questions[this.state.currentIndex].question_iteration_id
-
-    const options = {
-      method: 'POST',
-      headers: new Headers({'content-type': 'application/json'}),
-      body: JSON.stringify( { question_feedback: feedback } )
-    }
-
-    let apiUrl = `${ URL_PREFIX }/question_feedbacks`
-
-    await fetch(apiUrl, options)
-            .then(res => res.json())
-              .then(feedback => {
-                //console.log('feedback saved', feedback)
-              })
+    this.props.createFeedback(feedback)
   }
 
   render() {
@@ -141,7 +128,8 @@ class QuizContainer extends Component {
 QuizContainer.propTypes = {
   fetchQuestions: PropTypes.func.isRequired,
   questions: PropTypes.array.isRequired,
-  createTestResult: PropTypes.func.isRequired
+  createTestResult: PropTypes.func.isRequired,
+  createFeedback: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => {
@@ -150,4 +138,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, { fetchQuestions, createTestResult })(QuizContainer)
+export default connect(mapStateToProps, { fetchQuestions, createTestResult, createFeedback })(QuizContainer)
