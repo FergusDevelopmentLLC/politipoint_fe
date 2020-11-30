@@ -47,8 +47,8 @@ class ResultsContainer extends Component {
               <h3>Test Results</h3>
               <div id="results-container">
                 <Continuum type='economic'    match={ this.state.economicMatch }    value={ this.state.testResult.economic } flip={ true }/>
-                <Continuum type='diplomatic'  match={ this.state.diplomaticMatch }  value={ this.state.testResult.diplomatic } flip={ false }/>
-                <Continuum type='civil'       match={ this.state.civilMatch }       value={ this.state.testResult.civil } flip={ true }/>
+                <Continuum type='diplomatic'  match={ this.state.diplomaticMatch }  value={ this.state.testResult.diplomatic } flip={ true }/>
+                <Continuum type='civil'       match={ this.state.civilMatch }       value={ this.state.testResult.civil } flip={ false }/>
                 <Continuum type='societal'    match={ this.state.societalMatch }    value={ this.state.testResult.societal } flip={ true }/>
               </div>
               <h2>Ideology match: { this.state.ideologyMatchName }</h2>

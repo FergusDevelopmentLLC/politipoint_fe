@@ -5,9 +5,7 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import allCounties from "../data/counties_albers.geojson"
 
 export const Map = ({
-  version = [],
-  coordinates = [-119.846, 43.862],
-  zoom = 6
+  
 }) => {
   
   const countiesHandler = () => {

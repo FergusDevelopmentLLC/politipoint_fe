@@ -5,7 +5,7 @@ export const Continuum = ({
   flip = false,
   value = 50,
   linePosition = 100,
-  width = 200,
+  width = 449,
   height = 50,
   match = ''
 }) => {
@@ -16,24 +16,25 @@ export const Continuum = ({
   }
 
   if (width > 0) { height = .05 * width }
-  if (width < 450) { height = .15 * width }
+  if (width < 450) { height = .08 * width }
 
   let leftPercent = (value * 100) / 100
   let rightPercent = (100 - ((value * 100) / 100))
 
   if(flip) {
-    leftPercent = 100 - leftPercent
-    rightPercent = 100 - rightPercent
     value = 100 - value
   }
 
   let leftPercentText = ''
   let rightPercentText = ''
-  if (leftPercent > rightPercent) leftPercentText = `${leftPercent.toFixed(0)}%`
-  if (rightPercent > leftPercent) rightPercentText = `${rightPercent.toFixed(0)}%`
-  if (rightPercent === leftPercent) {
-      rightPercentText = `${rightPercent.toFixed(0)}%`
-      leftPercentText = `${leftPercent.toFixed(0)}%`
+  
+  if(leftPercent.toFixed(1) > rightPercent.toFixed(1)) 
+    leftPercentText = `${leftPercent.toFixed(1)}%`
+  else if(rightPercent.toFixed(1) > leftPercent.toFixed(1))
+    rightPercentText = `${rightPercent.toFixed(1)}%`
+  else {
+    leftPercentText = `${leftPercent.toFixed(1)}%`
+    rightPercentText = `${rightPercent.toFixed(1)}%`
   }
 
   let leftImg = ''
