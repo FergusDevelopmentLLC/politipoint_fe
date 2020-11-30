@@ -86,7 +86,13 @@ class QuizContainer extends Component {
         }
       }
     }, () => {
+      
       // after saving testResult to state, if this is not the last question, increment it
+      console.log(this.state.testResult.civil)
+      console.log(this.state.testResult.diplomatic)
+      console.log(this.state.testResult.economic)
+      console.log(this.state.testResult.societal)
+
       if (this.state.currentIndex < this.state.questions.length - 1) {
         this.setState((previousState) => {
           const nextIndex = previousState.currentIndex + 1
