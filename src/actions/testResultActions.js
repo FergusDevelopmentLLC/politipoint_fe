@@ -1,4 +1,4 @@
-import { NEW_TEST_RESULT, UPDATE_TEST_RESULT } from './types'
+import { NEW_TEST_RESULT, UPDATE_TEST_RESULT, CLEAR_DATA } from './types'
 import { URL_PREFIX } from './urlPrefix'
 
 export const createTestResult = (testResult, history) => dispatch => {
@@ -36,18 +36,17 @@ export const updateTestResult = (testResult, history) => dispatch => {
   fetch(`${apiUrl}`, options)
     .then(res => res.json())
     .then((savedTestResult) => {
+      
       dispatch({
         type: UPDATE_TEST_RESULT,
         payload: savedTestResult
       })
+
+      dispatch({
+        type: CLEAR_DATA
+      })
+
       history.push(`/results/${ savedTestResult.economic }/${ savedTestResult.diplomatic }/${ savedTestResult.civil }/${ savedTestResult.societal }`)
     })
 
-  // let savedTestResult = await fetch(apiUrl, options).then(r => r.json())
-  // dispatch({
-  //   type: UPDATE_TEST_RESULT,
-  //   payload: savedTestResult
-  // })
-  // history.push(`/results/${ savedTestResult.economic }/${ savedTestResult.diplomatic }/${ savedTestResult.civil }/${ savedTestResult.societal }`)
-  
 }

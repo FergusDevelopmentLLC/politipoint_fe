@@ -9,3 +9,6 @@ export const UPDATE_TEST_RESULT = 'UPDATE_TEST_RESULT'
 export const NEW_FEEDBACK = 'NEW_FEEDBACK'
 
 export const FETCH_IDEOLOGIES = 'FETCH_IDEOLOGIES'
+
+export const CLEAR_DATA = 'CLEAR_DATA'
+

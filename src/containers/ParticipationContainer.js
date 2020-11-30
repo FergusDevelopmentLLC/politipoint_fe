@@ -16,7 +16,8 @@ class ParticipationContainer extends Component {
   }
 
   getLocationText = () => {
-    if( this.state.testResult && this.state.testResult.county ) {
+    //this must be props here, because we don't want the stateful testResult to change when user changes it here
+    if( this.props.testResult && this.props.testResult.county ) {
 
       let htmlContent = `Based on your IP address, your local county has been approximated to be: 
                          <strong>${ this.props.testResult.county.name }, ${this.props.testResult.county.state_abbrev}</strong>. If wish to affiliate 
