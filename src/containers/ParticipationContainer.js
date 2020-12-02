@@ -40,16 +40,21 @@ class ParticipationContainer extends Component {
           county_override: true
         }
       }
+      delete rebuilt.testResult.county_geoid
       delete rebuilt.testResult.county
-
+      
       if(countyGeoId) {
-        rebuilt.testResult.county = {
-          geoid: countyGeoId
+        rebuilt.testResult = {
+          ...rebuilt.testResult,
+          county_geoid: countyGeoId,
+          county: {
+            geoid: countyGeoId
+          }
         }
       }
-      
       return rebuilt
-
+    },() => {
+      console.log('this.state', this.state)
     })
   }
 
@@ -97,29 +102,10 @@ class ParticipationContainer extends Component {
         </div>
 
         <div className="button-wrapper">
-          <Link className='button' to="#" onClick={ async () => {
-
-            if(!this.state.testResult || (this.state.testResult && !this.state.testResult.economic)) {
-              return
-            }
-
+          <Link className='button' to="#" onClick={ () => {
+            console.log('this.state', this.state)
             if(this.state.testResult.county || !this.state.testResult.opt_in) {
-
-              let testResultForSaving = {
-                id: this.state.testResult.id,
-                optIn: this.state.testResult.opt_in,
-                countyOverride: this.state.testResult.county_override
-              }
-
-              if(this.state.testResult.county) {
-                testResultForSaving = {
-                  ...testResultForSaving,
-                  countyGeoId: this.state.testResult.county.geoid
-                }
-              }
-              
-              this.props.updateTestResult(testResultForSaving, this.props.history)
-              
+              this.props.updateTestResult(this.state.testResult, this.props.history)
             }
             else {
               alert("Please select a county or opt out of sharing your test results.")

@@ -2,7 +2,6 @@ import { NEW_TEST_RESULT, UPDATE_TEST_RESULT, CLEAR_DATA } from './types'
 import { URL_PREFIX } from './urlPrefix'
 
 export const createTestResult = (testResult, history) => dispatch => {
-  console.log('createTestResult')
   
   const options = {
     method: 'POST',
@@ -23,15 +22,14 @@ export const createTestResult = (testResult, history) => dispatch => {
 }
 
 export const updateTestResult = (testResult, history) => dispatch => {
-  console.log('updateTestResult')
-  
+
   const options = {
     method: 'PATCH',
     headers: new Headers({'content-type': 'application/json'}),
     body: JSON.stringify( { test_result: testResult } )
   }
 
-  let apiUrl = `${ URL_PREFIX }/test_results_check`
+  let apiUrl = `${ URL_PREFIX }/test_results/${testResult.id}`
   
   fetch(`${apiUrl}`, options)
     .then(res => res.json())
@@ -47,6 +45,7 @@ export const updateTestResult = (testResult, history) => dispatch => {
       })
 
       history.push(`/results/${ savedTestResult.economic }/${ savedTestResult.diplomatic }/${ savedTestResult.civil }/${ savedTestResult.societal }`)
+
     })
 
 }
