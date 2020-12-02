@@ -53,8 +53,6 @@ class ParticipationContainer extends Component {
         }
       }
       return rebuilt
-    },() => {
-      console.log('this.state', this.state)
     })
   }
 
