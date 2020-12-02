@@ -1,7 +1,8 @@
-import { FETCH_IDEOLOGIES } from "../actions/types";
+import { FETCH_IDEOLOGIES, FETCH_IDEOLOGY_MATCH } from "../actions/types";
 
 const initialState = {
-  ideologies: []
+  ideologies: [],
+  match: {}
 }
 
 export default (state = initialState, action) => {
@@ -11,6 +12,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         ideologies: action.payload
+      }
+    case FETCH_IDEOLOGY_MATCH: 
+      return {
+        ...state,
+        match: action.payload
       }
     default:
       return state

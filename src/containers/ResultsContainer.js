@@ -3,41 +3,15 @@ import { Link } from 'react-router-dom'
 import { HeaderLogo } from '../components/HeaderLogo'
 import { Continuum } from '../components/Continuum'
 import { Map } from '../components/Map'
-import { URL_PREFIX } from '../actions/urlPrefix'
+
+import { connect } from 'react-redux'
+import { fetchIdeologyMatches } from '../actions/ideologyActions'
+import PropTypes from 'prop-types'
 
 class ResultsContainer extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      testResult: this.props.testResult,
-      economicMatch: '',
-      diplomaticMatch: '',
-      civilMatch: '',
-      societalMatch: '',
-      ideologyMatchDefinition: '',
-      ideologyMatchDefinitionSource: '', 
-      ideologyMatchName: ''
-    }
-  }
-
-  async componentDidMount() {
-    
-    let url = `${ URL_PREFIX }/test_result_ideology/${ this.props.testResult.economic }/${ this.props.testResult.diplomatic }/${ this.props.testResult.civil }/${ this.props.testResult.societal }`
-    let ideologyMatches = await fetch(url).then(r => r.json())
-    
-    this.setState((previousState) => {
-      return {
-        ...previousState,
-        economicMatch: ideologyMatches.economic_match,
-        diplomaticMatch: ideologyMatches.diplomatic_match,
-        civilMatch: ideologyMatches.civil_match,
-        societalMatch: ideologyMatches.societal_match,
-        ideologyMatchDefinition: ideologyMatches.ideology_match_definition,
-        ideologyMatchDefinitionSource: ideologyMatches.ideology_match_definition_source, 
-        ideologyMatchName: ideologyMatches.ideology_match_name
-      }
-
-    })
+  
+  componentDidMount() {
+    this.props.fetchIdeologyMatches(this.props.testResult.economic, this.props.testResult.diplomatic, this.props.testResult.civil, this.props.testResult.societal)
   }
 
   render() {
@@ -46,14 +20,14 @@ class ResultsContainer extends Component {
               <HeaderLogo version={ this.props.version } />
               <h3>Test Results</h3>
               <div id="results-container">
-                <Continuum type='economic'    match={ this.state.economicMatch }    value={ this.state.testResult.economic } flip={ true }/>
-                <Continuum type='diplomatic'  match={ this.state.diplomaticMatch }  value={ this.state.testResult.diplomatic } flip={ true }/>
-                <Continuum type='civil'       match={ this.state.civilMatch }       value={ this.state.testResult.civil } flip={ false }/>
-                <Continuum type='societal'    match={ this.state.societalMatch }    value={ this.state.testResult.societal } flip={ true }/>
+                <Continuum type='economic'    match={ this.props.economicMatch }    value={ this.props.testResult.economic } flip={ true }/>
+                <Continuum type='diplomatic'  match={ this.props.diplomaticMatch }  value={ this.props.testResult.diplomatic } flip={ true }/>
+                <Continuum type='civil'       match={ this.props.civilMatch }       value={ this.props.testResult.civil } flip={ false }/>
+                <Continuum type='societal'    match={ this.props.societalMatch }    value={ this.props.testResult.societal } flip={ true }/>
               </div>
-              <h2>Ideology match: { this.state.ideologyMatchName }</h2>
+              <h2>Ideology match: { this.props.ideologyMatchName }</h2>
               <div id="results-ideology">
-                <p id="ideology-definition">{ this.state.ideologyMatchDefinition } <a href={ this.state.ideologyMatchDefinitionSource }>Source</a></p>
+                <p id="ideology-definition">{ this.props.ideologyMatchDefinition } <a href={ this.props.ideologyMatchDefinitionSource }>Source</a></p>
               </div>
               
               <h2>Test results map</h2>
@@ -81,4 +55,43 @@ class ResultsContainer extends Component {
   }
 }
 
-export default ResultsContainer
+ResultsContainer.propTypes = {
+  
+  fetchIdeologyMatches: PropTypes.func.isRequired,
+  economicMatch: PropTypes.string.isRequired,
+  diplomaticMatch: PropTypes.string.isRequired,
+  civilMatch: PropTypes.string.isRequired,
+  societalMatch: PropTypes.string.isRequired,
+  ideologyMatchDefinition: PropTypes.string.isRequired,
+  ideologyMatchDefinitionSource: PropTypes.string.isRequired,
+  ideologyMatchName: PropTypes.string.isRequired
+
+}
+
+const mapStateToProps = (state) => {
+  
+  if(Object.keys(state.ideologyReducer.match).length > 0) {
+    return {
+      economicMatch:   state.ideologyReducer.match.economic_match,
+      diplomaticMatch: state.ideologyReducer.match.diplomatic_match,
+      civilMatch:      state.ideologyReducer.match.civil_match,
+      societalMatch:   state.ideologyReducer.match.societal_match,
+      ideologyMatchName: state.ideologyReducer.match.ideology_match_name,
+      ideologyMatchDefinition: state.ideologyReducer.match.ideology_match_definition,
+      ideologyMatchDefinitionSource: state.ideologyReducer.match.ideology_match_definition_source,
+    }
+  }
+  else {
+    return {
+      economicMatch: '',
+      diplomaticMatch: '',
+      civilMatch: '',
+      societalMatch: '',
+      ideologyMatchDefinition: '',
+      ideologyMatchDefinitionSource: '',
+      ideologyMatchName: ''
+    }
+  }
+}
+
+export default connect(mapStateToProps, { fetchIdeologyMatches })(ResultsContainer)
