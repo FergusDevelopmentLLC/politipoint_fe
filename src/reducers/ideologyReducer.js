@@ -1,8 +1,7 @@
 import { FETCH_IDEOLOGIES, FETCH_IDEOLOGY_MATCH } from "../actions/types";
 
 const initialState = {
-  ideologies: [],
-  match: {}
+  ideologies: []
 }
 
 export default (state = initialState, action) => {

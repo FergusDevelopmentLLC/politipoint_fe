@@ -12,20 +12,21 @@ const IdeologiesContainer = ({
 
   useEffect(() => {
     fetchIdeologies()
-  }, [])
+  }, [fetchIdeologies])
 
   return (
     <>
-      <HeaderLogo isSkinny={ false }/>
-      <dl>
+        <HeaderLogo isSkinny={ false }/>
+        <dl>
         { 
           ideologies.map((ideology) => {
             return <Fragment key={ `${ideology.id}` } >
                       <dt key={ `dt_${ideology.id}` }>{ ideology.name }</dt>
                       <dd key={ `dd_${ideology.id}` }>{ ideology.definition }</dd>
                    </Fragment>
-           })}
-         </dl>
+           })
+        }
+        </dl>
     </> 
   )
 } 
