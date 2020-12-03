@@ -32,19 +32,13 @@ class App extends Component {
     return (
       <Provider store={ store }>
         <Router>
+
           <Route path="/" exact render={(props) => (
             <HomeContainer
               {...props}
               version={ this.state.version } />
           )} />
 
-          {/* TODO: remember this route */}
-          <Route path="/version1" exact render={(props) => {
-            <HomeContainer
-              {...props}
-              version={ this.state.version } />
-          }} />
-          
           <Route path="/quiz" exact render={(props) => (
             <QuizContainer 
               {...props}

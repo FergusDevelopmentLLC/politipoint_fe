@@ -1,5 +1,4 @@
 import React from "react"
-import { is } from "@babel/types"
 
 export const HeaderLogo = ({
   version = null,

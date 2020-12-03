@@ -101,7 +101,7 @@ class ParticipationContainer extends Component {
 
         <div className="button-wrapper">
           <Link className='button' to="#" onClick={ () => {
-            console.log('this.state', this.state)
+            
             if(this.state.testResult.county || !this.state.testResult.opt_in) {
               this.props.updateTestResult(this.state.testResult, this.props.history)
             }

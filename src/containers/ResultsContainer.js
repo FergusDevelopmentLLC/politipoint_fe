@@ -22,7 +22,9 @@ const ResultsContainer = ({
   ideologyMatchName = '',
   ideologyMatchDefinition = '',
   ideologyMatchDefinitionSource = '',
-  fetchIdeologyMatches
+  fetchIdeologyMatches,
+  setVersion,
+  history
 }) => {
 
   useEffect(() => {
@@ -54,7 +56,10 @@ const ResultsContainer = ({
       </div>
 
       <h2>Don't agree your results?</h2>
-      <p>Give <Link to='/version1'>version 1</Link> a try. It has more questions.</p>
+      <p>Give <Link to="#" onClick={ () => {
+            setVersion(1)
+            history.push("/")
+          }}>version 1</Link> a try. It has more questions.</p>
 
       <h2>Questions / Comments?</h2>
       <p> 
@@ -71,6 +76,7 @@ const ResultsContainer = ({
 
 ResultsContainer.propTypes = {
   fetchIdeologyMatches: PropTypes.func.isRequired,
+  setVersion: PropTypes.func.isRequired,
   economicMatch: PropTypes.string.isRequired,
   diplomaticMatch: PropTypes.string.isRequired,
   civilMatch: PropTypes.string.isRequired,
@@ -78,7 +84,6 @@ ResultsContainer.propTypes = {
   ideologyMatchDefinition: PropTypes.string.isRequired,
   ideologyMatchDefinitionSource: PropTypes.string.isRequired,
   ideologyMatchName: PropTypes.string.isRequired
-
 }
 
 const mapStateToProps = (state) => {
