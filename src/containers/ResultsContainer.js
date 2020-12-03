@@ -71,7 +71,6 @@ const ResultsContainer = ({
 
 ResultsContainer.propTypes = {
   fetchIdeologyMatches: PropTypes.func.isRequired,
-  version: PropTypes.string.isRequired,
   economicMatch: PropTypes.string.isRequired,
   diplomaticMatch: PropTypes.string.isRequired,
   civilMatch: PropTypes.string.isRequired,

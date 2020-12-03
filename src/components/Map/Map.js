@@ -5,16 +5,21 @@ import "./css/map.albers.css"
 
 import { allCounties } from "../../data/counties_albers"
 import { getCountyFillColors } from './Utilities/utils'
+import { handlePopup } from './Utilities/utils'
+import { showPopup } from './Utilities/utils'
+
 import ExtrudeMapControl from './controls/ExtrudeMapControl'
 import ResetMapControl from './controls/ResetMapControl'
 import RotateMapControl from './controls/RotateMapControl'
 import LogoControl from './controls/LogoControl'
 import LegendControl from './controls/LegendControl'
 
+import { connect } from 'react-redux'
+import { clearAveragedTestResults } from '../../actions/testResultActions'
+
 const Map = ({
   testResults = [],
-  mapBounds = [-21, -18.25, 21, 14], // get bounding box: http://bboxfinder.com, Southwest corner, Northeast corner
-  rotating = false
+  clearAveragedTestResults
 }) => {
   
   const mapContainer = useRef(null)
@@ -22,20 +27,23 @@ const Map = ({
   
   useEffect(() => {
 
-    const isRotating = () => {
-      return rotating
-    }
+    if(testResults.length === 0) return
 
-    const toggleRotation = () => {
-      rotating = !rotating
-    }
+    let rotating = false
+    let countyOfInterest = {}
+    let mapBounds = [-21, -18.25, 21, 14]// get bounding box: http://bboxfinder.com, Southwest corner, Northeast corner
+
+    const getCountyOfInterest = () => countyOfInterest
+    const setCountyOfInterest = newCounty => countyOfInterest = newCounty
+    const isRotating = () => rotating
+    const toggleRotation = () => rotating = !rotating
+    
+    const allTestsCount = testResults.reduce((acc, obj) => { return acc + obj.tr_count }, 0)
 
     const initMap = () => {
-    
+
       mapboxgl.accessToken = 'pk.eyJ1Ijoid2lsbGNhcnRlciIsImEiOiJjamV4b2g3Z2ExOGF4MzFwN3R1dHJ3d2J4In0.Ti-hnuBH8W4bHn7k6GCpGw'
       
-      const allTestsCount = testResults.reduce((acc, obj) => { return acc + obj.tr_count }, 0)
-
       const center = [(mapBounds[0] + mapBounds[2]) / 2, (mapBounds[1] + mapBounds[3]) / 2]
   
       const mapboxGlMap = new mapboxgl.Map({
@@ -46,6 +54,12 @@ const Map = ({
         attributionControl: false
       })
       
+      let popup = new mapboxgl.Popup({
+        offset: 0,
+        closeButton: true,
+        closeOnClick: false
+      })
+
       mapboxGlMap.fitBounds([
         [mapBounds[0], mapBounds[1]],
         [mapBounds[2], mapBounds[3]]
@@ -55,13 +69,24 @@ const Map = ({
       mapboxGlMap.addControl(new ExtrudeMapControl(), 'top-right')
       mapboxGlMap.addControl(new mapboxgl.FullscreenControl(), 'top-right')
       mapboxGlMap.addControl(new RotateMapControl(isRotating, toggleRotation), 'top-right')
-      mapboxGlMap.addControl(new ResetMapControl(isRotating, toggleRotation) , 'top-right')
+      mapboxGlMap.addControl(new ResetMapControl(isRotating, toggleRotation, setCountyOfInterest, mapBounds) , 'top-right')
       mapboxGlMap.addControl(new LogoControl(), 'bottom-left')
       
       mapboxGlMap.addControl(new LegendControl(allTestsCount), 'bottom-right')
 
       mapboxGlMap.scrollZoom.disable()
-  
+      
+      mapboxGlMap.on('moveend', () => {
+
+        if(Object.keys(countyOfInterest).length > 0) {
+          showPopup(mapboxGlMap, countyOfInterest, testResults, popup)
+        }
+        else {
+          popup.remove()
+        } 
+      
+      })
+
       mapboxGlMap.on("load", () => {
   
         mapboxGlMap.addSource('counties', {
@@ -123,26 +148,29 @@ const Map = ({
           }
         })
 
-        let matchingTestResultsFinder = (county) => {
+        const matchingTestResultsFinder = (county) => {
           return testResults.find((matchingTestResultsCounty) => {
             if(matchingTestResultsCounty.county_geoid.toString() === county.properties.geoid.toString()) {
               return matchingTestResultsCounty
             }
+            return null
           })
         }
-      
-        allCounties.features = allCounties.features.filter(county => {
-          if(matchingTestResultsFinder(county)) {
-            return county
-          }
-        }).map((county) => {
-          county.properties.height = matchingTestResultsFinder(county)["pct_height"]
-          return county
-        })
 
         mapboxGlMap.addSource('counties-geojson', {
           type: 'geojson',
-          data: allCounties
+          data: {
+            type: "FeatureCollection",
+            features: allCounties.features.reduce((acc, county) => {
+              const match = matchingTestResultsFinder(county)
+              if(match) {
+                match.height = match["pct_height"]
+                county.properties.height = match["pct_height"]
+                acc = [...acc, county]
+              }
+              return acc
+            },[])
+          }
         })
 
         mapboxGlMap.addLayer({
@@ -162,19 +190,26 @@ const Map = ({
           }
         })
 
+        handlePopup(mapboxGlMap, setCountyOfInterest, getCountyOfInterest, testResults)
+
         setStatefulMap(mapboxGlMap)
+
         console.log('mapStateful set in state')
+
+        clearAveragedTestResults()
+
       })
     }
 
-    if(!statefulMap && testResults.length > 0) { 
+    if(!statefulMap) { 
       initMap()
     }
     else {
-      //console.log('useEffect running! statefulMap or testResults must have changed.')
+      console.log('useEffect running! statefulMap or testResults must have changed.')
     }
 
-  }, [statefulMap, testResults, mapBounds])
+
+  }, [statefulMap, testResults, clearAveragedTestResults])
 
   return (
     <div id='map-container' ref={mapContainer}></div> 
@@ -182,4 +217,4 @@ const Map = ({
 
 }  
 
-export default Map
+export default connect(null, { clearAveragedTestResults })(Map)

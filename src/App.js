@@ -19,6 +19,14 @@ class App extends Component {
     }
   }
 
+  setVersion = (version) => {
+    this.setState(() => {
+      return {
+        version: version
+      }
+    })
+  }
+
   render() {
     
     return (
@@ -27,15 +35,14 @@ class App extends Component {
           <Route path="/" exact render={(props) => (
             <HomeContainer
               {...props}
-              version={ this.state.version }/>
+              version={ this.state.version } />
           )} />
 
           {/* TODO: remember this route */}
           <Route path="/version1" exact render={(props) => {
-            return <QuizContainer 
+            <HomeContainer
               {...props}
-              version={ 1 } 
-            />
+              version={ this.state.version } />
           }} />
           
           <Route path="/quiz" exact render={(props) => (
@@ -67,6 +74,7 @@ class App extends Component {
                 civil: parseFloat(props.match.params.civil),
                 societal: parseFloat(props.match.params.societal)
               } } 
+              setVersion = { this.setVersion }
             />
           )} />
 

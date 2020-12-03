@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import Map from '../components/Map/Map'
 
 import { fetchAveragedTestResults } from '../actions/testResultActions'
+
 import PropTypes from 'prop-types'
 
 const MapContainer = ({

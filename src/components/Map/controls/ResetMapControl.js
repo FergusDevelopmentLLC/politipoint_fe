@@ -1,7 +1,9 @@
 export default class ResetMapControl {
-  constructor (isRotating, toggleRotation) {
+  constructor (isRotating, toggleRotation, setCountyOfInterest, mapBounds) {
     this.isRotating = isRotating
     this.toggleRotation = toggleRotation
+    this.setCountyOfInterest = setCountyOfInterest
+    this.mapBounds = mapBounds
   }
 
   onAdd(map) {
@@ -27,7 +29,7 @@ export default class ResetMapControl {
 
       if(this.isRotating()) this.toggleRotation()
       
-      //countyHandler.setCountyOfInterest(null)
+      this.setCountyOfInterest({})
       
       let threedeeButton = document.getElementById('threedee')
       threedeeButton.setAttribute("title", 'Extrude Map')
@@ -43,10 +45,10 @@ export default class ResetMapControl {
       this.map.setPitch(0)
       this.map.setBearing(0)
 
-      // this.map.fitBounds([
-      //   [mapBounds[0], mapBounds[1]],
-      //   [mapBounds[2], mapBounds[3]]
-      // ])
+      this.map.fitBounds([
+        [this.mapBounds[0], this.mapBounds[1]],
+        [this.mapBounds[2], this.mapBounds[3]]
+      ])
 
       document.getElementById('county-3d-desc').style.display = 'none'
       document.getElementById('county-more-detail').style.display = 'inline'

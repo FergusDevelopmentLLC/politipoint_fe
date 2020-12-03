@@ -1,4 +1,4 @@
-import { NEW_TEST_RESULT, UPDATE_TEST_RESULT, FETCH_AVERAGED_TEST_RESULTS, CLEAR_DATA } from './types'
+import { NEW_TEST_RESULT, UPDATE_TEST_RESULT, FETCH_AVERAGED_TEST_RESULTS, CLEAR_AVERAGED_TEST_RESULTS, CLEAR_DATA } from './types'
 import { URL_PREFIX } from './urlPrefix'
 
 export const createTestResult = (testResult, history) => dispatch => {
@@ -43,11 +43,8 @@ export const updateTestResult = (testResult, history) => dispatch => {
       dispatch({
         type: CLEAR_DATA
       })
-
       history.push(`/results/${ savedTestResult.economic }/${ savedTestResult.diplomatic }/${ savedTestResult.civil }/${ savedTestResult.societal }`)
-
     })
-
 }
 
 export const fetchAveragedTestResults = (fake = false, fakeLimit = 300) => dispatch => {
@@ -57,5 +54,11 @@ export const fetchAveragedTestResults = (fake = false, fakeLimit = 300) => dispa
       type: FETCH_AVERAGED_TEST_RESULTS,
       payload: testResults
     })
+  })
+}
+
+export const clearAveragedTestResults = () => dispatch => {
+  dispatch({
+    type: CLEAR_AVERAGED_TEST_RESULTS
   })
 }
