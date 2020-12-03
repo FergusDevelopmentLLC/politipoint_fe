@@ -11,7 +11,7 @@ export const fetchIdeologies = () => dispatch => {
 }
 
 export const fetchIdeologyMatches = (economic, diplomatic, civil, societal) => dispatch => {    
- let url = `${ URL_PREFIX }/test_result_ideology/${ economic }/${ diplomatic }/${ civil }/${ societal }`
+  let url = `${ URL_PREFIX }/test_result_ideology/${ economic }/${ diplomatic }/${ civil }/${ societal }`
   fetch(url).then(res => res.json()).then((match) => {
     dispatch({
       type: FETCH_IDEOLOGY_MATCH,

@@ -1,4 +1,4 @@
-import { NEW_TEST_RESULT, UPDATE_TEST_RESULT } from "../actions/types";
+import { NEW_TEST_RESULT, UPDATE_TEST_RESULT, FETCH_AVERAGED_TEST_RESULTS } from "../actions/types";
 
 const initialState = {
   testResult: {}
@@ -15,6 +15,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         testResult: action.payload
+      };
+    case FETCH_AVERAGED_TEST_RESULTS:
+      return {
+        ...state,
+        averagedTestResults: action.payload
       };
     default:
       return state

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { HeaderLogo } from '../components/HeaderLogo'
 import { Continuum } from '../components/Continuum'
-import { Map } from '../components/Map'
+import Map from '../components/Map'
 
 import { connect } from 'react-redux'
 import { fetchIdeologyMatches } from '../actions/ideologyActions'

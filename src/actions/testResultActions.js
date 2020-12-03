@@ -1,4 +1,4 @@
-import { NEW_TEST_RESULT, UPDATE_TEST_RESULT, CLEAR_DATA } from './types'
+import { NEW_TEST_RESULT, UPDATE_TEST_RESULT, FETCH_AVERAGED_TEST_RESULTS, CLEAR_DATA } from './types'
 import { URL_PREFIX } from './urlPrefix'
 
 export const createTestResult = (testResult, history) => dispatch => {
@@ -48,4 +48,14 @@ export const updateTestResult = (testResult, history) => dispatch => {
 
     })
 
+}
+
+export const fetchAveragedTestResults = (fake = false, fakeLimit = 300) => dispatch => {
+  let apiUrl = fake ? `${ URL_PREFIX }/test_results_fake/${fakeLimit}` : `${ URL_PREFIX }/test_results_averaged`
+  fetch(apiUrl).then(res => res.json()).then((testResults) => {
+    dispatch({
+      type: FETCH_AVERAGED_TEST_RESULTS,
+      payload: testResults
+    })
+  })
 }

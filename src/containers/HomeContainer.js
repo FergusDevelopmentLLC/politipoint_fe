@@ -2,7 +2,7 @@ import React from 'react'
 import { HeaderLogo }  from "../components/HeaderLogo"
 import { Blurb } from "../components/Blurb"
 import { ContinuumStatic }  from '../components/ContinuumStatic'
-import { Map } from '../components/Map'
+import Map from '../components/Map'
 import { Link } from 'react-router-dom'
 
 const HomeContainer = ({
