@@ -1,4 +1,9 @@
 export default class ResetMapControl {
+  constructor (isRotating, toggleRotation) {
+    this.isRotating = isRotating
+    this.toggleRotation = toggleRotation
+  }
+
   onAdd(map) {
 
     this.map = map
@@ -20,7 +25,7 @@ export default class ResetMapControl {
 
     this.button.addEventListener('click', () => {
 
-      //if(rotator.isRotating()) rotator.flip()
+      if(this.isRotating()) this.toggleRotation()
       
       //countyHandler.setCountyOfInterest(null)
       

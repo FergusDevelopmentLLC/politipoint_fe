@@ -13,13 +13,22 @@ import LegendControl from './controls/LegendControl'
 
 const Map = ({
   testResults = [],
-  mapBounds = [-21, -18.25, 21, 14]// get bounding box: http://bboxfinder.com, Southwest corner, Northeast corner
+  mapBounds = [-21, -18.25, 21, 14], // get bounding box: http://bboxfinder.com, Southwest corner, Northeast corner
+  rotating = false
 }) => {
   
   const mapContainer = useRef(null)
   const [statefulMap, setStatefulMap] = useState(null)
   
   useEffect(() => {
+
+    const isRotating = () => {
+      return rotating
+    }
+
+    const toggleRotation = () => {
+      rotating = !rotating
+    }
 
     const initMap = () => {
     
@@ -45,8 +54,8 @@ const Map = ({
       mapboxGlMap.addControl(new mapboxgl.NavigationControl(), 'top-left')
       mapboxGlMap.addControl(new ExtrudeMapControl(), 'top-right')
       mapboxGlMap.addControl(new mapboxgl.FullscreenControl(), 'top-right')
-      mapboxGlMap.addControl(new RotateMapControl(), 'top-right')
-      mapboxGlMap.addControl(new ResetMapControl(), 'top-right')
+      mapboxGlMap.addControl(new RotateMapControl(isRotating, toggleRotation), 'top-right')
+      mapboxGlMap.addControl(new ResetMapControl(isRotating, toggleRotation) , 'top-right')
       mapboxGlMap.addControl(new LogoControl(), 'bottom-left')
       
       mapboxGlMap.addControl(new LegendControl(allTestsCount), 'bottom-right')
@@ -113,6 +122,46 @@ const Map = ({
             'line-blur': 1
           }
         })
+
+        let matchingTestResultsFinder = (county) => {
+          return testResults.find((matchingTestResultsCounty) => {
+            if(matchingTestResultsCounty.county_geoid.toString() === county.properties.geoid.toString()) {
+              return matchingTestResultsCounty
+            }
+          })
+        }
+      
+        allCounties.features = allCounties.features.filter(county => {
+          if(matchingTestResultsFinder(county)) {
+            return county
+          }
+        }).map((county) => {
+          county.properties.height = matchingTestResultsFinder(county)["pct_height"]
+          return county
+        })
+
+        mapboxGlMap.addSource('counties-geojson', {
+          type: 'geojson',
+          data: allCounties
+        })
+
+        mapboxGlMap.addLayer({
+          'id': 'county_extruded',
+          'source': 'counties-geojson',
+          'type': 'fill-extrusion',
+          'paint': {
+            'fill-extrusion-base': 0,
+            'fill-extrusion-color': getCountyFillColors(testResults),
+            'fill-extrusion-height': [
+              'interpolate', ['linear'],
+              ['get', 'height'],
+              0, 0,
+              1, 1000000
+             ],    
+            'fill-extrusion-opacity': 0
+          }
+        })
+
         setStatefulMap(mapboxGlMap)
         console.log('mapStateful set in state')
       })
