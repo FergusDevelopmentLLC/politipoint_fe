@@ -1,0 +1,114 @@
+.mapboxgl-popup {
+  max-width: 600px;
+  font: 10px/14px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+}
+
+.popup-header {
+  padding-bottom: .1rem;
+  border-bottom: 1px solid #484848;
+  }
+
+.popup-subheader {
+  text-align: left;
+  line-height: .8rem;
+  margin-top: .2rem;
+}
+
+.bar-wrapper-map {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.popup-barheader {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* map controls */
+.mapcontrol img {
+  width: 100%;
+}
+
+/* bar svg */
+svg {
+  display: block;
+  margin: auto;
+}
+
+.bar {
+  fill: url(#gradient);
+}
+
+.line {
+  stroke:rgb(247,209,55);
+  stroke-width:2
+}
+
+.red-stop {
+  stop-color: #ff0000;
+}
+
+.blue-stop {
+  stop-color: #0015bc;
+}
+
+.legend {
+  vertical-align: bottom;
+  width: 100%;
+  background: #fff;
+}
+
+.legend-wrapper {
+  margin: 0 .5rem .5rem auto;
+  padding: .1rem;
+  width: 40%;
+}
+
+#county-3d-desc {
+  display: none;
+}
+
+.legend-description {
+  color: #222;
+  background: #fff;
+  font-size: .9rem;
+  text-align: center;
+  padding: .1rem .5rem .4rem 0;
+}
+
+.politipoint-button-container {
+  visibility: visible;
+}
+
+@media screen and (max-width: 1780px) {
+  .legend-description {
+    font-size: .8rem;
+    line-height: .8rem;
+    padding: .2rem .2rem;
+  }
+}
+
+@media screen and (max-width: 1500px) {
+  .legend-description {
+    font-size: .7rem;
+    line-height: .7rem;
+  }
+}
+
+@media screen and (max-width: 1350px) {
+  .legend-description {
+    font-size: .65rem;
+    line-height: .65rem;
+    
+  }
+}
+
+@media screen and (max-width: 567px) {
+  .legend-wrapper {
+    display: none;
+  }  
+
+  .politipoint-button-container {
+    visibility: hidden;
+  }
+}
