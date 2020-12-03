@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 
-import Map from '../components/Map'
+import Map from '../components/Map/Map'
 
 import { fetchAveragedTestResults } from '../actions/testResultActions'
 import PropTypes from 'prop-types'
