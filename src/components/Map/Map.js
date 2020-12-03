@@ -24,8 +24,10 @@ const Map = ({
     const initMap = () => {
     
       mapboxgl.accessToken = 'pk.eyJ1Ijoid2lsbGNhcnRlciIsImEiOiJjamV4b2g3Z2ExOGF4MzFwN3R1dHJ3d2J4In0.Ti-hnuBH8W4bHn7k6GCpGw'
-  
-      let center = [(mapBounds[0] + mapBounds[2]) / 2, (mapBounds[1] + mapBounds[3]) / 2]
+      
+      const allTestsCount = testResults.reduce((acc, obj) => { return acc + obj.tr_count }, 0)
+
+      const center = [(mapBounds[0] + mapBounds[2]) / 2, (mapBounds[1] + mapBounds[3]) / 2]
   
       const mapboxGlMap = new mapboxgl.Map({
         container: mapContainer.current,
@@ -46,7 +48,8 @@ const Map = ({
       mapboxGlMap.addControl(new RotateMapControl(), 'top-right')
       mapboxGlMap.addControl(new ResetMapControl(), 'top-right')
       mapboxGlMap.addControl(new LogoControl(), 'bottom-left')
-      mapboxGlMap.addControl(new LegendControl(), 'bottom-right')
+      
+      mapboxGlMap.addControl(new LegendControl(allTestsCount), 'bottom-right')
 
       mapboxGlMap.scrollZoom.disable()
   

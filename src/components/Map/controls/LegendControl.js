@@ -1,4 +1,7 @@
 export default class LegendMapControl {
+  constructor(resultsCount) {
+    this.resultsCount = resultsCount
+  }
 
   onAdd(map) {
   
@@ -15,7 +18,7 @@ export default class LegendMapControl {
 
     this.desc = document.createElement('div')
     this.desc.classList.add('legend-description')
-    this.desc.innerHTML = "<span id='test-results-count'></span> county viewpoints have been collected.<span id='county-more-detail'> Click on a county for more detail.</span><span id='county-3d-desc'> County height indicates number of tests for that county.</span>"
+    this.desc.innerHTML = `${this.resultsCount} county viewpoints have been collected.<span id='county-more-detail'> Click on a county for more detail.</span><span id='county-3d-desc'> County height indicates number of tests for that county.</span>`
     this.container.appendChild(this.desc)
     
     return this.container
