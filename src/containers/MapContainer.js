@@ -8,12 +8,13 @@ import PropTypes from 'prop-types'
 
 const MapContainer = ({
   fetchAveragedTestResults,
-  testResults = []
+  testResults = [],
+  fake = false
 }) => {
 
   useEffect(() => {
-    fetchAveragedTestResults()
-  }, [fetchAveragedTestResults])
+    fetchAveragedTestResults(fake)
+  }, [fetchAveragedTestResults, fake])
 
   return (
     <Map testResults = { testResults } />

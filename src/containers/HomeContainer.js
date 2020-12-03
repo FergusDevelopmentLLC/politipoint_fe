@@ -2,7 +2,7 @@ import React from 'react'
 import { HeaderLogo }  from "../components/HeaderLogo"
 import { Blurb } from "../components/Blurb"
 import { ContinuumStatic }  from '../components/ContinuumStatic'
-import Map from '../components/Map'
+import MapContainer from '../containers/MapContainer'
 import { Link } from 'react-router-dom'
 
 const HomeContainer = ({
@@ -34,9 +34,7 @@ const HomeContainer = ({
       Click/tap on a county in the map below to see aggregated details for that county. Click the extrude map button 
       to see information about test result counts per county. 
     </p>
-    <div className="map-wrapper">
-      <Map />
-    </div>
+    <MapContainer fake={ true } />
     <p>
       The map above is randomly generated for illustration purposes and do not reflect actual tests results. For actual 
       test results, visit the <a href='map.html'>results map</a>

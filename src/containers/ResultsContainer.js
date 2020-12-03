@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { HeaderLogo } from '../components/HeaderLogo'
 import { Continuum } from '../components/Continuum'
-import Map from '../components/Map'
+import MapContainer from '../containers/MapContainer'
 
 import { connect } from 'react-redux'
 import { fetchIdeologyMatches } from '../actions/ideologyActions'
@@ -50,7 +50,7 @@ const ResultsContainer = ({
         button to see how the number of tests from each county compares. Counties with taller heights have had more test results.
       </p>
       <div id="results-map">
-        <Map />
+        <MapContainer />
       </div>
 
       <h2>Don't agree your results?</h2>
