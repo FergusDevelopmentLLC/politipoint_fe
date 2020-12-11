@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { HeaderLogo }  from "../components/HeaderLogo"
 import { fetchIdeologies } from '../actions/ideologyActions'
 import PropTypes from 'prop-types'
+import Ideologies  from "../components/Ideologies"
 
 const IdeologiesContainer = ({
   ideologies = [],
@@ -17,16 +18,7 @@ const IdeologiesContainer = ({
   return (
     <>
         <HeaderLogo isSkinny={ false }/>
-        <dl>
-        { 
-          ideologies.map((ideology) => {
-            return <Fragment key={ `${ideology.id}` } >
-                      <dt key={ `dt_${ideology.id}` }>{ ideology.name }</dt>
-                      <dd key={ `dd_${ideology.id}` }>{ ideology.definition }</dd>
-                   </Fragment>
-           })
-        }
-        </dl>
+        <Ideologies ideologies={ ideologies } />
     </> 
   )
 } 
