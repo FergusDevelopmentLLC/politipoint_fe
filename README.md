@@ -1,4 +1,4 @@
-# ATTENTION  
+# ATTENTION FLATIRON ASSESSMENT
 
 For the react assessment, I have moved over to this project:
 https://github.com/FergusDevelopmentLLC/pies_fe
@@ -15,7 +15,7 @@ $ cd political_fingerprint_fe
 $ npm install
 $ npm start
 ```
-5. Open your browser to http://127.0.0.1:5000
+3. Open your browser to http://127.0.0.1:5000
 
 ## Back end repository
 
