@@ -14,16 +14,15 @@ import RotateMapControl from './controls/RotateMapControl'
 import LogoControl from './controls/LogoControl'
 import LegendControl from './controls/LegendControl'
 
-import { connect } from 'react-redux'
+import { connect, useDispatch } from 'react-redux'
 import { clearAveragedTestResults } from '../../actions/testResultActions'
 
-const Map = ({
-  testResults = [],
-  clearAveragedTestResults
-}) => {
+const Map = (props) => {
   
   const mapContainer = useRef(null)
   const [statefulMap, setStatefulMap] = useState(null)
+  const testResults = props.testResults
+  const dispatch = useDispatch()
   
   useEffect(() => {
 
@@ -196,8 +195,8 @@ const Map = ({
 
         console.log('mapStateful set in state')
 
-        clearAveragedTestResults()
-
+        
+        
       })
     }
 
@@ -205,11 +204,12 @@ const Map = ({
       initMap()
     }
     else {
+      dispatch(clearAveragedTestResults())
       console.log('useEffect running! statefulMap or testResults must have changed.')
     }
 
 
-  }, [statefulMap, testResults, clearAveragedTestResults])
+  }, [testResults, statefulMap])
 
   return (
     <div id='map-container' ref={mapContainer}></div> 
@@ -217,4 +217,4 @@ const Map = ({
 
 }  
 
-export default connect(null, { clearAveragedTestResults })(Map)
+export default Map
