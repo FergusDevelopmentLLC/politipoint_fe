@@ -14,7 +14,7 @@ import RotateMapControl from './controls/RotateMapControl'
 import LogoControl from './controls/LogoControl'
 import LegendControl from './controls/LegendControl'
 
-import { connect, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { clearAveragedTestResults } from '../../actions/testResultActions'
 
 const Map = (props) => {
