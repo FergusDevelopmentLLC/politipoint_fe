@@ -1,8 +1,3 @@
-# ATTENTION FLATIRON ASSESSMENT
-
-For the react assessment, I have moved over to this project:
-https://github.com/FergusDevelopmentLLC/pies_fe
-
 # Politipoint Front end
 
 Politipoint is a quiz to help you understand your political leanings.
