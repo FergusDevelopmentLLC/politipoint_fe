@@ -3,7 +3,8 @@ import mapboxgl from "mapbox-gl"
 import "mapbox-gl/dist/mapbox-gl.css"
 import "./css/map.albers.css"
 
-import { allCounties } from "../../data/counties_albers"
+//import { allCounties } from "../../data/counties_albers"
+
 import { getCountyFillColors } from './Utilities/utils'
 import { handlePopup } from './Utilities/utils'
 import { showPopup } from './Utilities/utils'
@@ -156,21 +157,21 @@ const Map = (props) => {
           })
         }
 
-        mapboxGlMap.addSource('counties-geojson', {
-          type: 'geojson',
-          data: {
-            type: "FeatureCollection",
-            features: allCounties.features.reduce((acc, county) => {
-              const match = matchingTestResultsFinder(county)
-              if(match) {
-                match.height = match["pct_height"]
-                county.properties.height = match["pct_height"]
-                acc = [...acc, county]
-              }
-              return acc
-            },[])
-          }
-        })
+        // mapboxGlMap.addSource('counties-geojson', {
+        //   type: 'geojson',
+        //   data: {
+        //     type: "FeatureCollection",
+        //     features: allCounties.features.reduce((acc, county) => {
+        //       const match = matchingTestResultsFinder(county)
+        //       if(match) {
+        //         match.height = match["pct_height"]
+        //         county.properties.height = match["pct_height"]
+        //         acc = [...acc, county]
+        //       }
+        //       return acc
+        //     },[])
+        //   }
+        // })
 
         mapboxGlMap.addLayer({
           'id': 'county_extruded',
