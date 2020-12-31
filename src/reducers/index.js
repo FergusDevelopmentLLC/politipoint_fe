@@ -4,14 +4,12 @@ import quizReducer from './quizReducer'
 import testResultReducer from './testResultReducer'
 import feedbackReducer from './feedbackReducer'
 import ideologyReducer from './ideologyReducer'
-import countyReducer from './countyReducer'
 
 const appReducer = combineReducers({
   quizReducer,
   testResultReducer,
   feedbackReducer,
-  ideologyReducer,
-  countyReducer
+  ideologyReducer
 })
 
 //https://stackoverflow.com/questions/35622588/how-to-reset-the-state-of-a-redux-store
