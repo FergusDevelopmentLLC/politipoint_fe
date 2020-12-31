@@ -4,9 +4,6 @@ import mapboxgl from "mapbox-gl"
 import "mapbox-gl/dist/mapbox-gl.css"
 import "./css/map.albers.css"
 
-//import { allCounties } from "../../data/counties_albers"
-import { fetchCounties } from '../../actions/countyActions'
-
 import { getCountyFillColors } from './Utilities/utils'
 import { handlePopup } from './Utilities/utils'
 import { showPopup } from './Utilities/utils'
@@ -25,23 +22,9 @@ const Map = (props) => {
   const [statefulMap, setStatefulMap] = useState(null)
   const testResults = props.testResults
   const dispatch = useDispatch()
-  const allCounties = useSelector(state => {
-    //console.log('state', state)
-    return state.countyReducer.counties
-  })
+
+  const allCounties = require('../../data/counties_albers')
   
-  useEffect(() => {
-
-    // console.log('fetchCounties')    
-    
-    dispatch(fetchCounties())
-
-    // return () => {
-    //   console.log('destroyed')
-    // }
-
-  }, [])
-
   useEffect(() => {
 
     if(testResults.length === 0) return
@@ -227,9 +210,19 @@ const Map = (props) => {
     if(!statefulMap) { 
       initMap()
     }
-
+    else {
+      dispatch(clearAveragedTestResults())
+    }
+    
     return () => {
-      console.log('CLEANUP')
+      setStatefulMap(null)
+      // dispatch({
+      //   type: 'CLEAR_DATA'
+      // })
+      
+      console.log('SET STATEFUL MAP TO NULL')
+      
+      // document.getElementById('map-container').innerHTML = '';
       // console.log('mapContainer.current', mapContainer.current)
 
       // if( mapContainer.current )
@@ -247,7 +240,7 @@ const Map = (props) => {
       // console.log('destroyed!')
     }
 
-  }, [testResults])
+  }, [testResults, allCounties])
 
   return (
     <div id='map-container' ref={mapContainer}></div> 
