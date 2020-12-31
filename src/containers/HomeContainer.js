@@ -37,7 +37,7 @@ const HomeContainer = ({
     <MapContainer fake={ true } />
     <p>
       The map above is randomly generated for illustration purposes and do not reflect actual tests results. For actual 
-      test results, visit the <Link to={'/map'}>results map</Link>
+      test results, visit the <a href='/map'>results map</a>
     </p>
     
     <Blurb headerText={ 'Feedback' } htmlContent={
