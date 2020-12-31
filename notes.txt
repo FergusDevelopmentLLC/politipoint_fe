@@ -2,3 +2,7 @@ https://stackoverflow.com/questions/39758136/render-html-string-as-real-html-in-
 https://github.com/facebook/create-react-app/issues/3513
 https://www.carlrippon.com/react-drop-down-data-binding/
 https://ui.dev/react-router-v4-programmatically-navigate/
+
+https://blog.logrocket.com/how-to-get-previous-props-state-with-react-hooks/https://stackoverflow.com/questions/55823296/reactjs-prevstate-in-the-new-usestate-react-hook
+https://stackoverflow.com/questions/55823296/reactjs-prevstate-in-the-new-usestate-react-hook
+https://dmitripavlutin.com/check-if-object-has-property-javascript/
