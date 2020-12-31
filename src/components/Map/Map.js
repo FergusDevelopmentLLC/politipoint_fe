@@ -1,5 +1,5 @@
+ 
 import React, { useEffect, useRef, useState } from "react"
-import { useSelector, useDispatch } from 'react-redux'
 import mapboxgl from "mapbox-gl"
 import "mapbox-gl/dist/mapbox-gl.css"
 import "./css/map.albers.css"
@@ -14,6 +14,7 @@ import RotateMapControl from './controls/RotateMapControl'
 import LogoControl from './controls/LogoControl'
 import LegendControl from './controls/LegendControl'
 
+import { useDispatch } from 'react-redux'
 import { clearAveragedTestResults } from '../../actions/testResultActions'
 
 const Map = (props) => {
@@ -22,17 +23,11 @@ const Map = (props) => {
   const [statefulMap, setStatefulMap] = useState(null)
   const testResults = props.testResults
   const dispatch = useDispatch()
-
   const allCounties = require('../../data/counties_albers')
   
   useEffect(() => {
 
     if(testResults.length === 0) return
-
-    if(allCounties.hasOwnProperty('features') === false) return
-
-    // console.log('testResults.length', testResults.length)
-    // console.log('allCounties', allCounties)
 
     let rotating = false
     let countyOfInterest = {}
@@ -162,47 +157,44 @@ const Map = (props) => {
           })
         }
 
-        if(allCounties && allCounties.features && allCounties.features.length > 0) {
-          mapboxGlMap.addSource('counties-geojson', {
-            type: 'geojson',
-            data: {
-              type: "FeatureCollection",
-              features: allCounties.features.reduce((acc, county) => {
-                const match = matchingTestResultsFinder(county)
-                if(match) {
-                  county.properties.height = match["pct_height"]
-                  acc = [...acc, county]
-                }
-                return acc
-              },[])
-            }
-          })
-  
-          mapboxGlMap.addLayer({
-            'id': 'county_extruded',
-            'source': 'counties-geojson',
-            'type': 'fill-extrusion',
-            'paint': {
-              'fill-extrusion-base': 0,
-              'fill-extrusion-color': getCountyFillColors(testResults),
-              'fill-extrusion-height': [
-                'interpolate', ['linear'],
-                ['get', 'height'],
-                0, 0,
-                1, 1000000
-               ],    
-              'fill-extrusion-opacity': 0
-            }
-          })
-        }
-        
+        mapboxGlMap.addSource('counties-geojson', {
+          type: 'geojson',
+          data: {
+            type: "FeatureCollection",
+            features: allCounties.features.reduce((acc, county) => {
+              const match = matchingTestResultsFinder(county)
+              if(match) {
+                match.height = match["pct_height"]
+                county.properties.height = match["pct_height"]
+                acc = [...acc, county]
+              }
+              return acc
+            },[])
+          }
+        })
+
+        mapboxGlMap.addLayer({
+          'id': 'county_extruded',
+          'source': 'counties-geojson',
+          'type': 'fill-extrusion',
+          'paint': {
+            'fill-extrusion-base': 0,
+            'fill-extrusion-color': getCountyFillColors(testResults),
+            'fill-extrusion-height': [
+              'interpolate', ['linear'],
+              ['get', 'height'],
+              0, 0,
+              1, 1000000
+             ],    
+            'fill-extrusion-opacity': 0
+          }
+        })
+
         handlePopup(mapboxGlMap, setCountyOfInterest, getCountyOfInterest, testResults)
 
         setStatefulMap(mapboxGlMap)
 
         console.log('mapStateful set in state')
-
-        
         
       })
     }
@@ -212,35 +204,15 @@ const Map = (props) => {
     }
     else {
       dispatch(clearAveragedTestResults())
+      console.log('useEffect running! statefulMap or testResults must have changed.')
     }
-    
+
     return () => {
       setStatefulMap(null)
-      // dispatch({
-      //   type: 'CLEAR_DATA'
-      // })
-      
       console.log('SET STATEFUL MAP TO NULL')
-      
-      // document.getElementById('map-container').innerHTML = '';
-      // console.log('mapContainer.current', mapContainer.current)
-
-      // if( mapContainer.current )
-      //   mapContainer.current.value = ""
-
-      // console.log('mapContainer.current', mapContainer.current)
-
-      // setStatefulMap(null)
-      // dispatch({
-      //   type: 'CLEAR_DATA'
-      // })
-      
-      // dispatch(clearAveragedTestResults())
-      // mapContainer.current = null
-      // console.log('destroyed!')
     }
 
-  }, [testResults, allCounties])
+  }, [testResults, statefulMap])
 
   return (
     <div id='map-container' ref={mapContainer}></div> 
