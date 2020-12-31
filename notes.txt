@@ -6,3 +6,6 @@ https://ui.dev/react-router-v4-programmatically-navigate/
 https://blog.logrocket.com/how-to-get-previous-props-state-with-react-hooks/https://stackoverflow.com/questions/55823296/reactjs-prevstate-in-the-new-usestate-react-hook
 https://stackoverflow.com/questions/55823296/reactjs-prevstate-in-the-new-usestate-react-hook
 https://dmitripavlutin.com/check-if-object-has-property-javascript/
+https://stackoverflow.com/questions/62412963/how-to-reset-input-field-from-useref-in-react
+https://leewarrick.com/blog/react-use-effect-explained/
+https://medium.com/@alicantorun/react-hooks-usestate-and-useeffect-useref-with-cleanups-166d9231b6e4
