@@ -28,6 +28,21 @@ class App extends Component {
   }
 
   render() {
+
+    const WrapperComponent = (props) => {
+      
+      const search = props.location.search
+      const params = new URLSearchParams(search)
+      
+      let testResult = {
+        economic: parseFloat(params.get('e')),
+        diplomatic: parseFloat(params.get('d')),
+        civil: parseFloat(params.get('c')),
+        societal: parseFloat(params.get('s'))
+      }
+      
+      return <ResultsContainer {...props} testResult = { testResult } setVersion = { this.setVersion } />
+    }
     
     return (
       <Provider store={ store }>
@@ -59,26 +74,17 @@ class App extends Component {
             />
           )} />
           
-          <Route path="/results/:economic/:diplomatic/:civil/:societal" exact render={(props) => (
-            <ResultsContainer 
-              {...props}
-              testResult={ {
-                economic: parseFloat(props.match.params.economic),
-                diplomatic: parseFloat(props.match.params.diplomatic),
-                civil: parseFloat(props.match.params.civil),
-                societal: parseFloat(props.match.params.societal)
-              } } 
-              setVersion = { this.setVersion }
-            />
-          )} />
+          <Route path="/results" component={ WrapperComponent } />
 
           <Route path="/ideologies" exact render={(props) => (
             <IdeologiesContainer 
               {...props} />
           )} />
+
         </Router>
       </Provider>
     )  
   } 
 }
 export default App
+
