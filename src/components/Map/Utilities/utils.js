@@ -149,7 +149,7 @@ export const showPopup = (map, countyOfInterest, testResults, popup) => {
         </div>`
     }
     
-    tooltip_msg += `<div class='popup-subheader'>Ideology: <em><a href='/results/${match.economic.toFixed(2)}/${match.diplomatic.toFixed(2)}/${match.civil.toFixed(2)}/${match.societal.toFixed(2)}'>${match.ideology_match_name}</a></em></div>`  
+    tooltip_msg += `<div class='popup-subheader'>Ideology: <em><a href='/results?e=${match.economic.toFixed(2)}&d=${match.diplomatic.toFixed(2)}&c=${match.civil.toFixed(2)}&s=${match.societal.toFixed(2)}'>${match.ideology_match_name}</a></em></div>`
 
   }
   else {
