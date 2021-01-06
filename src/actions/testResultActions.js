@@ -43,7 +43,8 @@ export const updateTestResult = (testResult, history) => dispatch => {
       dispatch({
         type: CLEAR_DATA
       })
-      history.push(`/results/${ savedTestResult.economic }/${ savedTestResult.diplomatic }/${ savedTestResult.civil }/${ savedTestResult.societal }`)
+      //history.push(`/results/${ savedTestResult.economic }/${ savedTestResult.diplomatic }/${ savedTestResult.civil }/${ savedTestResult.societal }`)
+      history.push(`/results?e=${ savedTestResult.economic }&d=${ savedTestResult.diplomatic }&c=${ savedTestResult.civil }&s=${ savedTestResult.societal }`)
     })
 }
 
