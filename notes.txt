@@ -9,3 +9,22 @@ https://dmitripavlutin.com/check-if-object-has-property-javascript/
 https://stackoverflow.com/questions/62412963/how-to-reset-input-field-from-useref-in-react
 https://leewarrick.com/blog/react-use-effect-explained/
 https://medium.com/@alicantorun/react-hooks-usestate-and-useeffect-useref-with-cleanups-166d9231b6e4
+
+
+<Route path="/results/:economic/:diplomatic/:civil/:societal" exact render={(props) => (
+            <ResultsContainer 
+              {...props}
+              testResult={ {
+                economic: parseFloat(props.match.params.economic),
+                diplomatic: parseFloat(props.match.params.diplomatic),
+                civil: parseFloat(props.match.params.civil),
+                societal: parseFloat(props.match.params.societal)
+              } } 
+              setVersion = { this.setVersion }
+            />
+          )} />
+
+https://stackoverflow.com/questions/42123743/query-string-react-router-path
+https://dev.to/danielkun/nginx-everything-about-proxypass-2ona
+https://www.thegeekstuff.com/2017/05/nginx-location-examples/
+https://stackoverflow.com/questions/42862253/how-to-parse-query-string-in-react-router-v4
