@@ -4,7 +4,7 @@ import { HeaderLogo } from '../components/HeaderLogo'
 import { Continuum } from '../components/Continuum'
 import MapContainer from '../containers/MapContainer'
 
-import { connect } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { fetchIdeologyMatches } from '../actions/ideologyActions'
 import PropTypes from 'prop-types'
 
@@ -15,21 +15,23 @@ const ResultsContainer = ({
     civil: 0,
     societal: 0
   },
-  economicMatch = '',
-  diplomaticMatch = '',
-  civilMatch = '',
-  societalMatch = '',
-  ideologyMatchName = '',
-  ideologyMatchDefinition = '',
-  ideologyMatchDefinitionSource = '',
-  fetchIdeologyMatches,
   setVersion,
   history
 }) => {
 
+  const economicMatch = useSelector(state => state.ideologyReducer.match ? state.ideologyReducer.match.economic_match : '')
+  const diplomaticMatch = useSelector(state => state.ideologyReducer.match ? state.ideologyReducer.match.diplomatic_match : '')
+  const civilMatch = useSelector(state => state.ideologyReducer.match ? state.ideologyReducer.match.civil_match : '')
+  const societalMatch = useSelector(state => state.ideologyReducer.match ? state.ideologyReducer.match.societal_match : '')
+  const ideologyMatchName = useSelector(state => state.ideologyReducer.match ? state.ideologyReducer.match.ideology_match_name : '')
+  const ideologyMatchDefinition = useSelector(state => state.ideologyReducer.match ? state.ideologyReducer.match.ideology_match_definition : '')
+  const ideologyMatchDefinitionSource = useSelector(state => state.ideologyReducer.match ? state.ideologyReducer.match.ideology_match_definition_source : '')
+  
+  const dispatch = useDispatch()
+
   useEffect(() => {
-    fetchIdeologyMatches(testResult.economic, testResult.diplomatic, testResult.civil, testResult.societal)
-  }, [testResult, fetchIdeologyMatches])
+    dispatch(fetchIdeologyMatches(testResult.economic, testResult.diplomatic, testResult.civil, testResult.societal))
+  }, [testResult])
 
   return (
     <div id='results-container'>
@@ -75,28 +77,7 @@ const ResultsContainer = ({
 }
 
 ResultsContainer.propTypes = {
-  fetchIdeologyMatches: PropTypes.func.isRequired,
-  setVersion: PropTypes.func.isRequired,
-  economicMatch: PropTypes.string.isRequired,
-  diplomaticMatch: PropTypes.string.isRequired,
-  civilMatch: PropTypes.string.isRequired,
-  societalMatch: PropTypes.string.isRequired,
-  ideologyMatchDefinition: PropTypes.string.isRequired,
-  ideologyMatchDefinitionSource: PropTypes.string.isRequired,
-  ideologyMatchName: PropTypes.string.isRequired
+  setVersion: PropTypes.func.isRequired
 }
 
-const mapStateToProps = (state) => {
-  const match = state.ideologyReducer.match
-  return {
-    economicMatch:                  match ? match.economic_match : '',
-    diplomaticMatch:                match ? match.diplomatic_match : '',
-    civilMatch:                     match ? match.civil_match : '',
-    societalMatch:                  match ? match.societal_match : '',
-    ideologyMatchName:              match ? match.ideology_match_name : '',
-    ideologyMatchDefinition:        match ? match.ideology_match_definition : '',
-    ideologyMatchDefinitionSource:  match ? match.ideology_match_definition_source : '',
-  }
-}
-
-export default connect(mapStateToProps, { fetchIdeologyMatches })(ResultsContainer)
+export default ResultsContainer
