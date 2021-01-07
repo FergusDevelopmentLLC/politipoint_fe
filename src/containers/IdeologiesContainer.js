@@ -1,23 +1,22 @@
-import React, { Fragment, useEffect } from 'react'
-import { connect } from 'react-redux'
-
-import { HeaderLogo }  from "../components/HeaderLogo"
-import { fetchIdeologies } from '../actions/ideologyActions'
+import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
+import { useSelector, useDispatch } from "react-redux"
+import { fetchIdeologies } from '../actions/ideologyActions'
+import { HeaderLogo }  from "../components/HeaderLogo"
 import Ideologies  from "../components/Ideologies"
 
-const IdeologiesContainer = ({
-  ideologies = [],
-  fetchIdeologies
-}) => {
+const IdeologiesContainer = (props) => {
+
+  const ideologies = useSelector(state => state.ideologyReducer.ideologies)
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    fetchIdeologies()
+    dispatch(fetchIdeologies())
   }, [fetchIdeologies])
 
   return (
     <>
-        <HeaderLogo isSkinny={ false }/>
+        <HeaderLogo isSkinny={ true }/>
         <Ideologies ideologies={ ideologies } />
     </> 
   )
@@ -28,10 +27,4 @@ IdeologiesContainer.propTypes = {
   ideologies: PropTypes.array.isRequired
 }
 
-const mapStateToProps = (state) => {
-  return {
-    ideologies: state.ideologyReducer.ideologies
-  }
-}
-
-export default connect(mapStateToProps, { fetchIdeologies })(IdeologiesContainer)
+export default IdeologiesContainer
