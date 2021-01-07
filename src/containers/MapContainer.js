@@ -1,36 +1,22 @@
 import React, { useEffect } from 'react'
-import { connect } from 'react-redux'
-
 import Map from '../components/Map/Map'
-
 import { fetchAveragedTestResults } from '../actions/testResultActions'
-
-import PropTypes from 'prop-types'
+import { useSelector, useDispatch } from "react-redux"
 
 const MapContainer = ({
-  fetchAveragedTestResults,
-  testResults = [],
   fake = false
 }) => {
 
+  const dispatch = useDispatch()
+  const testResults = useSelector(state => state.testResultReducer.averagedTestResults ? state.testResultReducer.averagedTestResults : [])
+  
   useEffect(() => {
-    fetchAveragedTestResults(fake)
-  }, [fetchAveragedTestResults, fake])
+    dispatch(fetchAveragedTestResults(fake))
+  }, [fake])
 
   return (
-    <Map testResults = { testResults } />
+    <Map testResults={ testResults } />
   )
 } 
 
-MapContainer.propTypes = {
-  fetchAveragedTestResults: PropTypes.func.isRequired,
-  testResults: PropTypes.array.isRequired
-}
-
-const mapStateToProps = (state) => {
-  return {
-    testResults: state.testResultReducer.averagedTestResults ? state.testResultReducer.averagedTestResults : []
-  }
-}
-
-export default connect(mapStateToProps, { fetchAveragedTestResults })(MapContainer)
+export default MapContainer
