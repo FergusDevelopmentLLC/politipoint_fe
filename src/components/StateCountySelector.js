@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import { StateCounty } from "../data/stateCounty"
 
 class StateCountySelector extends Component {

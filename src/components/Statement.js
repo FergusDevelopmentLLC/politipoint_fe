@@ -1,4 +1,4 @@
-import React, { Component, Fragment} from 'react';
+import React, { Component } from 'react'
 
 class Statement extends Component {
   constructor(props) {
@@ -147,8 +147,7 @@ class Statement extends Component {
   render() {
 
     return (
-      <Fragment>
-        
+      <>
       <h3>{ this.getStatementText() }</h3>
 
       <div className="statement-wrapper">{ this.props.currentText }</div>
@@ -188,9 +187,7 @@ class Statement extends Component {
       <div className="back-next-wrapper">
         <button className={ `small_button${ this.state.nextButtonOn ? "" : "_off" }` } onClick={ this.onNextClick } disabled={ this.state.nextButtonOn ? '' :  'disabled' }>Next</button>
       </div>
-
-
-      </Fragment>
+      </>
     )
   }
 }
