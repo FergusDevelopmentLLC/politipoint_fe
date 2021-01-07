@@ -1,7 +1,8 @@
 import { NEW_TEST_RESULT, UPDATE_TEST_RESULT, FETCH_AVERAGED_TEST_RESULTS, CLEAR_AVERAGED_TEST_RESULTS } from "../actions/types";
 
 const initialState = {
-  testResult: {}
+  testResult: {},
+  averagedTestResults: []
 }
 
 export default (state = initialState, action) => {
