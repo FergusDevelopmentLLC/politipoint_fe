@@ -102,6 +102,10 @@ class QuizContainer extends Component {
             currentText: previousState.questions[nextIndex].question
           }
         })
+
+        document.querySelector('.logo-wrapper').scrollIntoView({ 
+          behavior: 'smooth' 
+        })
       }
       else {//if this is the last question, save testResult to api
         this.saveTestResult()
