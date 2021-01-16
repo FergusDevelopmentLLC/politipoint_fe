@@ -16,6 +16,7 @@ import LegendControl from './controls/LegendControl'
 
 import { useDispatch } from 'react-redux'
 import { clearAveragedTestResults } from '../../actions/testResultActions'
+import useEvent from 'use-add-event'
 
 const Map = (props) => {
   
@@ -24,15 +25,25 @@ const Map = (props) => {
   const testResults = props.testResults
   const dispatch = useDispatch()
   const allCounties = require('../../data/counties_albers')
+  const mapBounds = [-21, -18.25, 21, 14]// get bounding box: http://bboxfinder.com, Southwest corner, Northeast corner
   
+  const handleResize = (e) => { 
+    statefulMap.fitBounds([
+      [mapBounds[0], mapBounds[1]],
+      [mapBounds[2], mapBounds[3]]
+    ])
+    statefulMap.resize()
+  }
+
+  useEvent('resize', handleResize)
+
   useEffect(() => {
 
     if(testResults.length === 0) return
 
     let rotating = false
     let countyOfInterest = {}
-    let mapBounds = [-21, -18.25, 21, 14]// get bounding box: http://bboxfinder.com, Southwest corner, Northeast corner
-
+    
     const getCountyOfInterest = () => countyOfInterest
     const setCountyOfInterest = newCounty => countyOfInterest = newCounty
     const isRotating = () => rotating
@@ -64,7 +75,7 @@ const Map = (props) => {
         [mapBounds[0], mapBounds[1]],
         [mapBounds[2], mapBounds[3]]
       ])
-      
+
       mapboxGlMap.addControl(new mapboxgl.NavigationControl(), 'top-left')
       mapboxGlMap.addControl(new ExtrudeMapControl(), 'top-right')
       mapboxGlMap.addControl(new mapboxgl.FullscreenControl(), 'top-right')
@@ -194,25 +205,36 @@ const Map = (props) => {
 
         setStatefulMap(mapboxGlMap)
 
-        console.log('mapStateful set in state')
+        console.log('statefulMap set in state')
         
       })
     }
+    
+    // if(!statefulMap) { 
+      
+    // }
+    // else {
+    //   console.log('useEffect running! testResults must have changed.')
+    // }
 
-    if(!statefulMap) { 
-      initMap()
-    }
-    else {
-      dispatch(clearAveragedTestResults())
-      console.log('useEffect running! statefulMap or testResults must have changed.')
-    }
+    initMap()
 
     return () => {
-      setStatefulMap(null)
       console.log('SET STATEFUL MAP TO NULL')
+      setStatefulMap(null)
+      dispatch(clearAveragedTestResults())
+      
+      // if(statefulMap) {
+      //   statefulMap.eachLayer(function (layer) {
+      //     console.log('layer', layer)
+      //     statefulMap.removeLayer(layer);
+      //   })
+      //   setStatefulMap(null)
+      // }
+      // 
     }
 
-  }, [testResults, statefulMap])
+  }, [testResults])
 
   return (
     <div id='map-container' ref={mapContainer}></div> 
